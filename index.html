@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SecureOS - Privacy & Security Enhanced Linux Distribution</title>
+    <meta name="description" content="SecureOS by Barrer Software - A security-hardened Linux distribution based on Ubuntu 24.04 LTS with full disk encryption, AppArmor, and advanced security features.">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary: #667eea;
+            --secondary: #764ba2;
+            --dark: #1a202c;
+            --light: #f7fafc;
+            --success: #48bb78;
+            --danger: #f56565;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background: var(--light);
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 80px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="rgba(255,255,255,0.1)" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,112C672,96,768,96,864,112C960,128,1056,160,1152,160C1248,160,1344,128,1392,112L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>') bottom center no-repeat;
+            background-size: cover;
+            opacity: 0.3;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .hero h1 {
+            font-size: 3.5em;
+            margin-bottom: 20px;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .hero .subtitle {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+            opacity: 0.95;
+        }
+        
+        .hero .tagline {
+            font-size: 1.2em;
+            opacity: 0.9;
+            margin-bottom: 40px;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 15px 35px;
+            font-size: 1.1em;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+        }
+        
+        .btn-primary {
+            background: white;
+            color: var(--primary);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+        
+        .btn-secondary:hover {
+            background: white;
+            color: var(--primary);
+        }
+        
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Features Section */
+        .features {
+            padding: 80px 20px;
+            background: white;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 50px;
+            color: var(--primary);
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .feature-card {
+            background: var(--light);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        
+        .feature-icon {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+        
+        .feature-card h3 {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+        
+        /* Versions Section */
+        .versions {
+            padding: 80px 20px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+        
+        .version-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .version-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            border-left: 5px solid var(--primary);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .version-card h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-size: 1.8em;
+        }
+        
+        .version-card ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .version-card li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+        
+        .version-card li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--success);
+            font-weight: bold;
+        }
+        
+        /* Server Roles */
+        .server-roles {
+            padding: 80px 20px;
+            background: white;
+        }
+        
+        .roles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+        
+        .role-card {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .role-card:hover {
+            transform: scale(1.05);
+        }
+        
+        .role-card h4 {
+            font-size: 1.3em;
+            margin-bottom: 10px;
+        }
+        
+        .role-card p {
+            opacity: 0.9;
+            font-size: 0.95em;
+        }
+        
+        /* Download Section */
+        .download {
+            padding: 80px 20px;
+            background: var(--dark);
+            color: white;
+            text-align: center;
+        }
+        
+        .download-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .download-card {
+            background: rgba(255,255,255,0.1);
+            padding: 30px;
+            border-radius: 15px;
+            border: 2px solid rgba(255,255,255,0.2);
+        }
+        
+        .download-card h3 {
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+        
+        .download-card code {
+            background: rgba(0,0,0,0.3);
+            padding: 15px;
+            border-radius: 8px;
+            display: block;
+            margin: 15px 0;
+            font-size: 0.9em;
+            text-align: left;
+            overflow-x: auto;
+        }
+        
+        /* Footer */
+        footer {
+            background: #0f0f0f;
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+        
+        footer a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+        
+        footer a:hover {
+            text-decoration: underline;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5em;
+            }
+            
+            .hero .subtitle {
+                font-size: 1.2em;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>🔒 SecureOS</h1>
+            <p class="subtitle">Privacy & Security Enhanced Linux Distribution</p>
+            <p class="tagline">By Barrer Software | Based on Ubuntu 24.04 LTS</p>
+            <div class="cta-buttons">
+                <a href="https://github.com/ssfdre38/SecureOS/releases" class="btn btn-primary">Download ISO</a>
+                <a href="https://github.com/ssfdre38/SecureOS" class="btn btn-secondary">View on GitHub</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <h2 class="section-title">Why SecureOS?</h2>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🛡️</div>
+                    <h3>Security Hardened</h3>
+                    <p>Full disk encryption (LUKS2), AppArmor MAC, kernel hardening, and secure boot support out of the box.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🔐</div>
+                    <h3>Privacy First</h3>
+                    <p>Built-in VPN support, MAC randomization, Tor integration, and no telemetry or tracking.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">💻</div>
+                    <h3>Live Desktop</h3>
+                    <p>Boot into a full XFCE desktop environment. Try before installing with all security tools pre-loaded.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🚀</div>
+                    <h3>Server Ready</h3>
+                    <p>12 pre-configured server roles from web hosting to Kubernetes. Production-ready in minutes.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🔍</div>
+                    <h3>Intrusion Detection</h3>
+                    <p>Advanced IDS with real-time monitoring, automated responses, and comprehensive logging.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">📦</div>
+                    <h3>Package Repository</h3>
+                    <p>Curated security tools and packages hosted on GitHub with global CDN delivery.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Versions Section -->
+    <section class="versions">
+        <div class="container">
+            <h2 class="section-title">Version History</h2>
+            <div class="version-cards">
+                <div class="version-card">
+                    <h3>v3.0.0 <span style="color: var(--success); font-size: 0.8em;">LATEST</span></h3>
+                    <ul>
+                        <li>Live bootable ISO</li>
+                        <li>Desktop environment</li>
+                        <li>12 server roles</li>
+                        <li>VS Code Server</li>
+                        <li>ZFS web interface</li>
+                        <li>Container hosting</li>
+                    </ul>
+                </div>
+                
+                <div class="version-card">
+                    <h3>v2.0.0</h3>
+                    <ul>
+                        <li>Custom kernel builder</li>
+                        <li>Advanced IDS</li>
+                        <li>GUI security manager</li>
+                        <li>APT repository</li>
+                    </ul>
+                </div>
+                
+                <div class="version-card">
+                    <h3>v1.1.0</h3>
+                    <ul>
+                        <li>VPN integration</li>
+                        <li>MAC randomization</li>
+                        <li>Container security</li>
+                    </ul>
+                </div>
+                
+                <div class="version-card">
+                    <h3>v1.0.0</h3>
+                    <ul>
+                        <li>Ubuntu 24.04 base</li>
+                        <li>Full disk encryption</li>
+                        <li>Security hardening</li>
+                        <li>Interactive installer</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Server Roles Section -->
+    <section class="server-roles">
+        <div class="container">
+            <h2 class="section-title">Pre-Configured Server Roles</h2>
+            <p style="text-align: center; font-size: 1.2em; margin-bottom: 20px;">Choose exactly what you need for your server deployment</p>
+            <div class="roles-grid">
+                <div class="role-card">
+                    <h4>🌐 Web Host</h4>
+                    <p>nginx, Apache, PHP 8.3, MySQL</p>
+                </div>
+                <div class="role-card">
+                    <h4>🔒 VPN Server</h4>
+                    <p>WireGuard, OpenVPN</p>
+                </div>
+                <div class="role-card">
+                    <h4>💻 Dev Environment</h4>
+                    <p>Docker, Node.js, Python, Go</p>
+                </div>
+                <div class="role-card">
+                    <h4>📝 VS Code Server</h4>
+                    <p>Web-based IDE on port 8080</p>
+                </div>
+                <div class="role-card">
+                    <h4>📁 File Server</h4>
+                    <p>Samba, NFS, ZFS support</p>
+                </div>
+                <div class="role-card">
+                    <h4>💾 ZFS Web Interface</h4>
+                    <p>Cockpit + ZFS management</p>
+                </div>
+                <div class="role-card">
+                    <h4>✉️ Mail Server</h4>
+                    <p>Postfix, Dovecot, DKIM</p>
+                </div>
+                <div class="role-card">
+                    <h4>🗄️ Database Server</h4>
+                    <p>PostgreSQL, MySQL, Redis</p>
+                </div>
+                <div class="role-card">
+                    <h4>📊 Monitoring</h4>
+                    <p>Prometheus, Grafana</p>
+                </div>
+                <div class="role-card">
+                    <h4>🐳 Container Host</h4>
+                    <p>Docker, Kubernetes (k3s)</p>
+                </div>
+                <div class="role-card">
+                    <h4>💾 Backup Server</h4>
+                    <p>Bacula, Borg, rsync</p>
+                </div>
+                <div class="role-card">
+                    <h4>⚙️ Base Server</h4>
+                    <p>Minimal secure install</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Download Section -->
+    <section class="download">
+        <div class="container">
+            <h2 class="section-title" style="color: white;">Get SecureOS</h2>
+            <div class="download-options">
+                <div class="download-card">
+                    <h3>📀 Download ISO</h3>
+                    <p>Get the latest Live ISO from GitHub Releases</p>
+                    <code>curl -L https://github.com/ssfdre38/SecureOS/releases/latest/download/secureos-*.iso -o secureos.iso</code>
+                    <a href="https://github.com/ssfdre38/SecureOS/releases" class="btn btn-primary" style="margin-top: 20px;">View Releases</a>
+                </div>
+                
+                <div class="download-card">
+                    <h3>📦 APT Repository</h3>
+                    <p>Install packages from our repository</p>
+                    <code>curl -L https://github.com/ssfdre38/secureos-packages/releases/latest/download/install-client.sh | sudo bash</code>
+                    <a href="https://ssfdre38.github.io/secureos-packages" class="btn btn-primary" style="margin-top: 20px;">Package Repo</a>
+                </div>
+                
+                <div class="download-card">
+                    <h3>💾 Source Code</h3>
+                    <p>Build from source or contribute</p>
+                    <code>git clone https://github.com/ssfdre38/SecureOS.git<br>cd SecureOS<br>sudo bash scripts/build_iso.sh</code>
+                    <a href="https://github.com/ssfdre38/SecureOS" class="btn btn-primary" style="margin-top: 20px;">GitHub Repo</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Barrer Software. All rights reserved.</p>
+            <p style="margin-top: 10px;">SecureOS is free and open source software.</p>
+            <p style="margin-top: 5px; opacity: 0.8;">Based on Ubuntu 24.04 LTS. Ubuntu and Canonical are registered trademarks of Canonical Ltd.</p>
+            <div class="footer-links">
+                <a href="https://github.com/ssfdre38/SecureOS">GitHub</a>
+                <a href="https://github.com/ssfdre38/SecureOS/issues">Report Issues</a>
+                <a href="https://github.com/ssfdre38/SecureOS/blob/master/README.md">Documentation</a>
+                <a href="https://github.com/ssfdre38/secureos-packages">Packages</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
