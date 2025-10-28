@@ -47,7 +47,7 @@ sudo bash scripts/build_iso.sh
 ### 4. Monitor Progress
 The build process will:
 1. Install dependencies (debootstrap, squashfs-tools, etc.)
-2. Bootstrap Ubuntu 22.04 base system
+2. Bootstrap Ubuntu 24.04.3 base system
 3. Install kernel and system packages
 4. Install security tools (UFW, AppArmor, auditd, fail2ban, ClamAV)
 5. Install privacy tools (Tor, Privoxy, macchanger, MAT2)
@@ -67,7 +67,7 @@ iso-build/
 ## What Gets Installed in the ISO
 
 ### Base System
-- Ubuntu 22.04 LTS (Jammy Jellyfish)
+- Ubuntu 24.04.3 LTS (Noble Numbat)
 - Linux kernel (latest stable)
 - Minimal desktop (Openbox + LightDM)
 - Network Manager
@@ -134,7 +134,7 @@ sudo eject /dev/sdX
 ### Change Base Distribution
 Edit `scripts/build_iso.sh`:
 ```bash
-# For Debian 12 instead of Ubuntu 22.04
+# For Debian 12 instead of Ubuntu 24.04.3
 debootstrap --arch=amd64 bookworm "$WORK_DIR/chroot" http://deb.debian.org/debian/
 ```
 

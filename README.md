@@ -323,7 +323,7 @@ For issues, questions, or contributions:
 ## Changelog
 
 ### Version 1.0.0 (Initial Release)
-- Base system on Ubuntu 22.04 LTS
+- Base system on Ubuntu 24.04.3 LTS
 - Full disk encryption with LUKS2
 - Kernel hardening with security parameters
 - AppArmor enforcement

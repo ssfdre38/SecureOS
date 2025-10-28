@@ -9,7 +9,7 @@ The SecureOS ISO is currently being built automatically on GitHub Actions infras
 - **Workflow**: Build SecureOS ISO
 - **Status**: Running (started a few minutes ago)
 - **Expected Duration**: 40-60 minutes
-- **Platform**: Ubuntu 22.04 on GitHub Actions
+- **Platform**: Ubuntu 24.04.3 on GitHub Actions
 
 ### View Live Build Progress
 
@@ -34,7 +34,7 @@ gh run list --workflow=build-iso.yml
 ### What's Being Built
 
 The GitHub Actions workflow is:
-1. ✅ Setting up Ubuntu 22.04 environment
+1. ✅ Setting up Ubuntu 24.04.3 environment
 2. ✅ Maximizing disk space (~40GB)
 3. 🔄 Installing build dependencies
 4. 🔄 Bootstrapping base Ubuntu system

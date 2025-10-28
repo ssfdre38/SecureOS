@@ -6,7 +6,7 @@ set -e
 
 WORK_DIR="/tmp/secureos-build"
 ISO_NAME="SecureOS-1.0.0-amd64.iso"
-# BASE_DISTRO variable for documentation - using Ubuntu 22.04 (Jammy)
+# BASE_DISTRO variable for documentation - using Ubuntu 24.04.3 LTS (Noble Numbat)
 # To change base: modify debootstrap command to use different release
 
 echo "=========================================="
@@ -41,7 +41,7 @@ mkdir -p "$WORK_DIR"/{chroot,image/{casper,isolinux,install}}
 
 # Bootstrap base system
 echo "[*] Bootstrapping base system..."
-debootstrap --arch=amd64 jammy "$WORK_DIR/chroot" http://archive.ubuntu.com/ubuntu/
+debootstrap --arch=amd64 noble "$WORK_DIR/chroot" http://archive.ubuntu.com/ubuntu/
 
 # Mount necessary filesystems
 echo "[*] Mounting filesystems..."
@@ -54,9 +54,10 @@ mount -t devpts none "$WORK_DIR/chroot/dev/pts"
 # Configure APT
 echo "[*] Configuring package repositories..."
 cat > "$WORK_DIR/chroot/etc/apt/sources.list" << EOF
-deb http://archive.ubuntu.com/ubuntu/ jammy main restricted universe multiverse
-deb http://archive.ubuntu.com/ubuntu/ jammy-updates main restricted universe multiverse
-deb http://archive.ubuntu.com/ubuntu/ jammy-security main restricted universe multiverse
+deb http://archive.ubuntu.com/ubuntu/ noble main restricted universe multiverse
+deb http://archive.ubuntu.com/ubuntu/ noble-updates main restricted universe multiverse
+deb http://archive.ubuntu.com/ubuntu/ noble-security main restricted universe multiverse
+deb http://archive.ubuntu.com/ubuntu/ noble-backports main restricted universe multiverse
 EOF
 
 # Chroot and install packages
