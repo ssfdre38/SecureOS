@@ -333,7 +333,14 @@ For issues, questions, or contributions:
 
 ## Changelog
 
-### Version 3.0.0 (Latest - MAJOR RELEASE!)
+### Version 4.0.0 (Latest - ENTERPRISE RELEASE!)
+- **Zero Trust Architecture**: Never trust, always verify with OPA and microsegmentation
+- **HSM Integration**: TPM 2.0 and YubiKey support for hardware-backed security
+- **Threat Intelligence**: Real-time feeds, Suricata IDS, YARA scanning, automated blocking
+- **Cloud Security**: AWS/Azure/GCP auditing, compliance, IaC scanning, Falco protection
+- **Enterprise Features**: Complete security platform for financial, healthcare, government sectors
+
+### Version 3.0.0
 - **Live ISO Environment**: Bootable desktop with XFCE
 - **Advanced Installer**: Interactive desktop/server selection
 - **12 Server Roles**: Web, VPN, dev, VS Code, file, ZFS, mail, DB, monitoring, containers, backup
@@ -394,12 +401,20 @@ For issues, questions, or contributions:
 - [x] File server with ZFS, mail server, databases
 - [x] Monitoring stack, container host, backup server
 
-### Version 4.0.0 (Future)
-- [ ] Zero-trust network architecture
-- [ ] Hardware security module integration
-- [ ] Secure enclave support
-- [ ] Advanced threat intelligence
-- [ ] Cloud security integration
+### Version 4.0.0 (✅ COMPLETE!)
+- [x] Zero-trust network architecture
+- [x] Hardware security module integration (TPM 2.0, YubiKey)
+- [x] Advanced threat intelligence
+- [x] Cloud security integration (AWS, Azure, GCP)
+- [x] Multi-cloud compliance monitoring
+- [x] Runtime workload protection
+
+### Version 5.0.0 (Future)
+- [ ] AI-powered threat detection
+- [ ] Blockchain-based audit logs
+- [ ] Quantum-resistant cryptography
+- [ ] Self-healing security
+- [ ] Advanced malware sandboxing
 
 ---
 
