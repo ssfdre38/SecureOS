@@ -1,4 +1,11 @@
 #!/bin/bash
+#
+# SecureOS - Security Enhanced Linux Distribution
+# Part of Barrer Software
+#
+# Copyright (c) 2025 Barrer Software
+# Licensed under the MIT License
+#
 # SecureOS Enhanced MAC Randomization
 # Advanced privacy protection through MAC address randomization
 

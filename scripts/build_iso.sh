@@ -1,8 +1,14 @@
 #!/bin/bash
-set -e
-
+#
 # SecureOS ISO Builder Script
-# This script builds a custom Debian/Ubuntu-based ISO with security hardening
+# Part of SecureOS - Security Enhanced Linux Distribution
+#
+# Copyright (c) 2025 Barrer Software
+# Licensed under the MIT License
+#
+# This script builds a custom Ubuntu-based ISO with security hardening
+#
+set -e
 
 WORK_DIR="/tmp/secureos-build"
 ISO_NAME="SecureOS-1.0.0-amd64.iso"

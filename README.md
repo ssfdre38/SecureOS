@@ -1,6 +1,17 @@
-# SecureOS - Security & Privacy Focused Linux Distribution
+# SecureOS - Security & Privacy Enhanced Linux Distribution
 
-SecureOS is a hardened Linux distribution based on Ubuntu/Debian, designed with security and privacy as the primary focus.
+**Part of Barrer Software | Based on Ubuntu 24.04 LTS**
+
+SecureOS is a hardened Linux distribution designed with security and privacy as the primary focus. Perfect for security-conscious users, privacy advocates, and enterprise deployments.
+
+---
+
+🌐 **Website**: https://ssfdre38.github.io/SecureOS  
+📦 **Packages**: https://ssfdre38.github.io/secureos-packages  
+💻 **GitHub**: https://github.com/ssfdre38/SecureOS  
+📥 **Downloads**: https://github.com/ssfdre38/SecureOS/releases
+
+---
 
 ## Features
 
@@ -392,4 +403,27 @@ For issues, questions, or contributions:
 
 ---
 
-**SecureOS** - Security and Privacy First
+## License & Copyright
+
+**Copyright © 2025 Barrer Software. All rights reserved.**
+
+SecureOS is free and open source software, licensed under the MIT License.
+
+- 📄 See [LICENSE](LICENSE) for full license text
+- 📋 See [COPYRIGHT.md](COPYRIGHT.md) for detailed attribution and third-party licenses
+- 🌐 Website: https://ssfdre38.github.io/SecureOS
+
+### Trademarks
+
+- **SecureOS** is a trademark of Barrer Software
+- **Ubuntu** is a registered trademark of Canonical Ltd.
+- All other trademarks are property of their respective owners
+
+### Third-Party Software
+
+SecureOS is based on Ubuntu 24.04 LTS and includes numerous open source components.
+Each component retains its original license and copyright. See COPYRIGHT.md for details.
+
+---
+
+**SecureOS** - Security and Privacy First | **Barrer Software** © 2025

@@ -1,4 +1,11 @@
 #!/bin/bash
+#
+# SecureOS - Security Enhanced Linux Distribution
+# Part of Barrer Software
+#
+# Copyright (c) 2025 Barrer Software
+# Licensed under the MIT License
+#
 # SecureOS APT Mirror - Mirror Ubuntu 24.04 Packages
 # Creates a local mirror of Ubuntu packages for offline/local use
 

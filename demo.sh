@@ -1,4 +1,11 @@
 #!/bin/bash
+#
+# SecureOS - Security Enhanced Linux Distribution
+# Part of Barrer Software
+#
+# Copyright (c) 2025 Barrer Software
+# Licensed under the MIT License
+#
 # Quick Demo - SecureOS Installer
 # This demonstrates the interactive installer without building the full ISO
 

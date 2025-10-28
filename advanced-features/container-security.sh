@@ -1,4 +1,11 @@
 #!/bin/bash
+#
+# SecureOS - Security Enhanced Linux Distribution
+# Part of Barrer Software
+#
+# Copyright (c) 2025 Barrer Software
+# Licensed under the MIT License
+#
 # SecureOS Container Security Hardening
 # Enhanced security for Docker and LXC containers
 

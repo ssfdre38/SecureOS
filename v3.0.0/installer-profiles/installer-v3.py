@@ -1,5 +1,13 @@
 #!/usr/bin/env python3
 """
+SecureOS - Security Enhanced Linux Distribution
+Part of Barrer Software
+
+Copyright (c) 2025 Barrer Software
+Licensed under the MIT License
+"""
+
+"""
 SecureOS v3.0.0 Advanced Installer
 Desktop and Server installation with role selection
 """
