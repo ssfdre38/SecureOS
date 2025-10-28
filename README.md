@@ -322,7 +322,14 @@ For issues, questions, or contributions:
 
 ## Changelog
 
-### Version 2.0.0 (Latest)
+### Version 3.0.0 (Latest - MAJOR RELEASE!)
+- **Live ISO Environment**: Bootable desktop with XFCE
+- **Advanced Installer**: Interactive desktop/server selection
+- **12 Server Roles**: Web, VPN, dev, VS Code, file, ZFS, mail, DB, monitoring, containers, backup
+- **Professional Deployment**: Production-ready server configurations
+- **Complete Documentation**: Full guides for all features
+
+### Version 2.0.0
 - **Custom Kernel Builder**: Build hardened kernels with security patches
 - **Advanced IDS**: Real-time intrusion detection with automated response
 - **GUI Security Manager**: PyQt5-based graphical management interface
@@ -366,7 +373,17 @@ For issues, questions, or contributions:
 - [x] GUI security management tools
 - [x] APT repository infrastructure
 
-### Version 3.0.0 (Future)
+### Version 3.0.0 (✅ COMPLETE!)
+- [x] Live ISO with desktop environment
+- [x] Advanced interactive installer
+- [x] Desktop vs Server installation modes  
+- [x] 12 pre-configured server roles
+- [x] Role-based service installation
+- [x] Web host, VPN, dev environment, VS Code Server
+- [x] File server with ZFS, mail server, databases
+- [x] Monitoring stack, container host, backup server
+
+### Version 4.0.0 (Future)
 - [ ] Zero-trust network architecture
 - [ ] Hardware security module integration
 - [ ] Secure enclave support
