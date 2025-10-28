@@ -1,0 +1,115 @@
+==========================================
+   SecureOS ISO Builder
+==========================================
+[*] Installing build dependencies...
+Hit:1 http://nova.clouds.archive.ubuntu.com/ubuntu noble InRelease
+Hit:2 https://deb.nodesource.com/node_20.x nodistro InRelease
+Hit:3 http://nova.clouds.archive.ubuntu.com/ubuntu noble-updates InRelease
+Hit:4 http://nova.clouds.archive.ubuntu.com/ubuntu noble-backports InRelease
+Hit:5 https://ppa.launchpadcontent.net/ondrej/php/ubuntu noble InRelease
+Hit:6 http://security.ubuntu.com/ubuntu noble-security InRelease
+Reading package lists...
+Reading package lists...
+Building dependency tree...
+Reading state information...
+squashfs-tools is already the newest version (1:4.6.1-1build1).
+squashfs-tools set to manually installed.
+grub-pc-bin is already the newest version (2.12-1ubuntu7.3).
+grub-pc-bin set to manually installed.
+grub-efi-amd64-bin is already the newest version (2.12-1ubuntu7.3).
+grub-efi-amd64-bin set to manually installed.
+dosfstools is already the newest version (4.2-1.1build1).
+dosfstools set to manually installed.
+git is already the newest version (1:2.43.0-1ubuntu7.3).
+The following additional packages will be installed:
+  libburn4t64 libisoburn1t64 libisofs6t64 syslinux-common
+Suggested packages:
+  squid-deb-proxy-client debian-archive-keyring arch-test floppyd
+  xorriso-tcltk jigit cdck
+The following NEW packages will be installed:
+  debootstrap isolinux libburn4t64 libisoburn1t64 libisofs6t64 mtools
+  syslinux-common syslinux-efi xorriso
+0 upgraded, 9 newly installed, 0 to remove and 0 not upgraded.
+Need to get 2803 kB of archives.
+After this operation, 7209 kB of additional disk space will be used.
+Get:1 http://nova.clouds.archive.ubuntu.com/ubuntu noble/universe amd64 isolinux all 3:6.04~git20190206.bf6db5b4+dfsg1-3ubuntu3 [57.8 kB]
+Get:2 http://nova.clouds.archive.ubuntu.com/ubuntu noble/main amd64 libburn4t64 amd64 1.5.6-1.1build1 [158 kB]
+Get:3 http://nova.clouds.archive.ubuntu.com/ubuntu noble/main amd64 libisofs6t64 amd64 1.5.6.pl01-1.1ubuntu2 [220 kB]
+Get:4 http://nova.clouds.archive.ubuntu.com/ubuntu noble/main amd64 libisoburn1t64 amd64 1:1.5.6-1.1ubuntu3 [405 kB]
+Get:5 http://nova.clouds.archive.ubuntu.com/ubuntu noble/main amd64 mtools amd64 4.0.43-1build1 [197 kB]
+Get:6 http://nova.clouds.archive.ubuntu.com/ubuntu noble/main amd64 syslinux-common all 3:6.04~git20190206.bf6db5b4+dfsg1-3ubuntu3 [1261 kB]
+Get:7 http://nova.clouds.archive.ubuntu.com/ubuntu noble/universe amd64 syslinux-efi all 3:6.04~git20190206.bf6db5b4+dfsg1-3ubuntu3 [159 kB]
+Get:8 http://nova.clouds.archive.ubuntu.com/ubuntu noble/main amd64 xorriso amd64 1:1.5.6-1.1ubuntu3 [297 kB]
+Get:9 http://nova.clouds.archive.ubuntu.com/ubuntu noble/main amd64 debootstrap all 1.0.134ubuntu1 [48.0 kB]
+Fetched 2803 kB in 29s (96.5 kB/s)
+Selecting previously unselected package isolinux.
+(Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 116470 files and directories currently installed.)
+Preparing to unpack .../0-isolinux_3%3a6.04~git20190206.bf6db5b4+dfsg1-3ubuntu3_all.deb ...
+Unpacking isolinux (3:6.04~git20190206.bf6db5b4+dfsg1-3ubuntu3) ...
+Selecting previously unselected package libburn4t64:amd64.
+Preparing to unpack .../1-libburn4t64_1.5.6-1.1build1_amd64.deb ...
+Unpacking libburn4t64:amd64 (1.5.6-1.1build1) ...
+Selecting previously unselected package libisofs6t64:amd64.
+Preparing to unpack .../2-libisofs6t64_1.5.6.pl01-1.1ubuntu2_amd64.deb ...
+Unpacking libisofs6t64:amd64 (1.5.6.pl01-1.1ubuntu2) ...
+Selecting previously unselected package libisoburn1t64:amd64.
+Preparing to unpack .../3-libisoburn1t64_1%3a1.5.6-1.1ubuntu3_amd64.deb ...
+Unpacking libisoburn1t64:amd64 (1:1.5.6-1.1ubuntu3) ...
+Selecting previously unselected package mtools.
+Preparing to unpack .../4-mtools_4.0.43-1build1_amd64.deb ...
+Unpacking mtools (4.0.43-1build1) ...
+Selecting previously unselected package syslinux-common.
+Preparing to unpack .../5-syslinux-common_3%3a6.04~git20190206.bf6db5b4+dfsg1-3ubuntu3_all.deb ...
+Unpacking syslinux-common (3:6.04~git20190206.bf6db5b4+dfsg1-3ubuntu3) ...
+Selecting previously unselected package syslinux-efi.
+Preparing to unpack .../6-syslinux-efi_3%3a6.04~git20190206.bf6db5b4+dfsg1-3ubuntu3_all.deb ...
+Unpacking syslinux-efi (3:6.04~git20190206.bf6db5b4+dfsg1-3ubuntu3) ...
+Selecting previously unselected package xorriso.
+Preparing to unpack .../7-xorriso_1%3a1.5.6-1.1ubuntu3_amd64.deb ...
+Unpacking xorriso (1:1.5.6-1.1ubuntu3) ...
+Selecting previously unselected package debootstrap.
+Preparing to unpack .../8-debootstrap_1.0.134ubuntu1_all.deb ...
+Unpacking debootstrap (1.0.134ubuntu1) ...
+Setting up debootstrap (1.0.134ubuntu1) ...
+Setting up isolinux (3:6.04~git20190206.bf6db5b4+dfsg1-3ubuntu3) ...
+Setting up mtools (4.0.43-1build1) ...
+Setting up syslinux-common (3:6.04~git20190206.bf6db5b4+dfsg1-3ubuntu3) ...
+Setting up syslinux-efi (3:6.04~git20190206.bf6db5b4+dfsg1-3ubuntu3) ...
+Setting up libisofs6t64:amd64 (1.5.6.pl01-1.1ubuntu2) ...
+Setting up libburn4t64:amd64 (1.5.6-1.1build1) ...
+Setting up libisoburn1t64:amd64 (1:1.5.6-1.1ubuntu3) ...
+Setting up xorriso (1:1.5.6-1.1ubuntu3) ...
+Processing triggers for man-db (2.12.0-4build2) ...
+Processing triggers for install-info (7.1-3build2) ...
+Processing triggers for libc-bin (2.39-0ubuntu8.6) ...
+
+Running kernel seems to be up-to-date.
+
+No services need to be restarted.
+
+No containers need to be restarted.
+
+No user sessions are running outdated binaries.
+
+No VM guests are running outdated hypervisor (qemu) binaries on this host.
+[*] Creating work directory...
+[*] Bootstrapping base system...
+I: Retrieving InRelease 
+I: Checking Release signature
+I: Valid Release signature (key id F6ECB3762474EDA9D21B7022871920D1991BC93C)
+I: Retrieving Packages 
+I: Validating Packages 
+I: Resolving dependencies of required packages...
+I: Resolving dependencies of base packages...
+I: Checking component main on http://archive.ubuntu.com/ubuntu...
+I: Retrieving adduser 3.118ubuntu5
+I: Validating adduser 3.118ubuntu5
+I: Retrieving apt 2.4.5
+I: Validating apt 2.4.5
+I: Retrieving apt-utils 2.4.5
+I: Validating apt-utils 2.4.5
+I: Retrieving base-files 12ubuntu4
+I: Validating base-files 12ubuntu4
+I: Retrieving base-passwd 3.5.52build1
+I: Validating base-passwd 3.5.52build1
+I: Retrieving bash 5.1-6ubuntu1
