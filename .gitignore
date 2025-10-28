@@ -1,0 +1,96 @@
+# Build artifacts
+iso-build/
+*.iso
+*.img
+build.log
+wget-log
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+.venv
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Logs
+*.log
+logs/
+/var/log/secureos/
+
+# Databases
+*.db
+*.sqlite
+*.sqlite3
+
+# Backups
+*.backup
+*.bak
+/var/backups/secureos/
+
+# Temporary files
+*.tmp
+temp/
+tmp/
+.cache/
+
+# SecureOS specific
+/var/lib/secureos/ai/models/*.pkl
+/var/lib/secureos/blockchain/*.db
+/var/lib/secureos/pqc/keys/*/secret.key
+/var/lib/secureos/sandbox/samples/
+/var/lib/secureos/sandbox/reports/
+
+# Security - never commit these!
+*.key
+*.pem
+*.crt
+*.p12
+*.pfx
+*_rsa
+*_dsa
+*_ecdsa
+*_ed25519
+secrets.json
+.env
+.env.local
+
+# Package managers
+node_modules/
+package-lock.json
+vendor/
+
+# OS
+Thumbs.db
+.Spotlight-V100
+.Trashes
+
+# Testing
+.tox/
+.nox/
+.hypothesis/
+
+# Documentation builds
+_build/
+site/
+
+# Local configuration
+local_settings.py
+config.local.json

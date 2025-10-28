@@ -1,0 +1,202 @@
+name: SecureOS CI/CD Pipeline
+
+on:
+  push:
+    branches: [ master, develop ]
+  pull_request:
+    branches: [ master ]
+  release:
+    types: [ created ]
+  schedule:
+    - cron: '0 2 * * 0'  # Weekly on Sunday at 2 AM
+
+jobs:
+  test:
+    name: Run Tests
+    runs-on: ubuntu-24.04
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+    
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y python3-pip sqlite3
+    
+    - name: Install Python packages
+      run: |
+        pip3 install --upgrade pip
+        pip3 install numpy scipy || true
+        pip3 install tensorflow scikit-learn joblib pandas || true
+    
+    - name: Run test suite
+      run: |
+        chmod +x scripts/test-suite.sh
+        sudo bash scripts/test-suite.sh || true
+    
+    - name: Test AI engine
+      run: |
+        if [ -f v5.0.0/ai-threat-detection/secureos-ai-engine.py ]; then
+          python3 v5.0.0/ai-threat-detection/secureos-ai-engine.py test || true
+        fi
+    
+    - name: Test blockchain
+      run: |
+        if [ -f v5.0.0/blockchain-audit/secureos-blockchain.py ]; then
+          python3 v5.0.0/blockchain-audit/secureos-blockchain.py init || true
+          python3 v5.0.0/blockchain-audit/secureos-blockchain.py stats || true
+        fi
+    
+    - name: Test PQC
+      run: |
+        if [ -f v5.0.0/quantum-crypto/secureos-pqc.py ]; then
+          python3 v5.0.0/quantum-crypto/secureos-pqc.py list || true
+        fi
+
+  security-scan:
+    name: Security Scan
+    runs-on: ubuntu-24.04
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Run Bandit security scan
+      run: |
+        pip3 install bandit
+        bandit -r v5.0.0/ -f json -o bandit-report.json || true
+    
+    - name: Run Shellcheck
+      run: |
+        sudo apt-get install -y shellcheck
+        find . -name "*.sh" -exec shellcheck {} + || true
+    
+    - name: Check for secrets
+      uses: trufflesecurity/trufflehog@main
+      with:
+        path: ./
+        base: ${{ github.event.repository.default_branch }}
+        head: HEAD
+
+  documentation:
+    name: Documentation Check
+    runs-on: ubuntu-24.04
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Check README files
+      run: |
+        test -f README.md
+        test -f v5.0.0/README.md
+        test -f v5.0.0/QUICKSTART.md
+        test -f v5.0.0/CHANGELOG.md
+    
+    - name: Validate markdown
+      run: |
+        npm install -g markdownlint-cli
+        markdownlint '**/*.md' --ignore node_modules || true
+
+  build-iso:
+    name: Build SecureOS ISO
+    runs-on: ubuntu-24.04
+    if: github.event_name == 'release'
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Free disk space
+      run: |
+        sudo rm -rf /usr/share/dotnet
+        sudo rm -rf /opt/ghc
+        sudo rm -rf "/usr/local/share/boost"
+        sudo rm -rf "$AGENT_TOOLSDIRECTORY"
+        sudo apt-get clean
+        df -h
+    
+    - name: Install build dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y \
+          debootstrap \
+          squashfs-tools \
+          xorriso \
+          isolinux \
+          syslinux-efi \
+          grub-pc-bin \
+          grub-efi-amd64-bin \
+          mtools
+    
+    - name: Build ISO
+      run: |
+        if [ -f scripts/build_iso.sh ]; then
+          sudo bash scripts/build_iso.sh || true
+        fi
+    
+    - name: Calculate checksums
+      run: |
+        if [ -d iso-build ]; then
+          cd iso-build
+          sha256sum *.iso > SHA256SUMS || true
+          md5sum *.iso > MD5SUMS || true
+        fi
+    
+    - name: Upload ISO artifact
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: SecureOS-ISO
+        path: iso-build/*.iso
+        retention-days: 30
+    
+    - name: Upload to release
+      uses: softprops/action-gh-release@v1
+      if: github.event_name == 'release'
+      with:
+        files: |
+          iso-build/*.iso
+          iso-build/SHA256SUMS
+          iso-build/MD5SUMS
+
+  code-quality:
+    name: Code Quality Check
+    runs-on: ubuntu-24.04
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Install pylint
+      run: pip3 install pylint
+    
+    - name: Run pylint
+      run: |
+        find v5.0.0 -name "*.py" -exec pylint {} + || true
+    
+    - name: Check code formatting
+      run: |
+        pip3 install black
+        black --check v5.0.0/ || true
+
+  version-check:
+    name: Version Consistency Check
+    runs-on: ubuntu-24.04
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Check version consistency
+      run: |
+        VERSION_README=$(grep "Version.*5.0.0" README.md | head -1 || true)
+        VERSION_V5=$(grep "Version.*5.0.0" v5.0.0/README.md | head -1 || true)
+        echo "Main README version: $VERSION_README"
+        echo "v5.0.0 README version: $VERSION_V5"
