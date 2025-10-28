@@ -1,0 +1,356 @@
+# SecureOS - Security & Privacy Focused Linux Distribution
+
+SecureOS is a hardened Linux distribution based on Ubuntu/Debian, designed with security and privacy as the primary focus.
+
+## Features
+
+### Security
+- **Full Disk Encryption**: LUKS2 encryption with Argon2id key derivation
+- **Hardened Kernel**: Security-focused kernel parameters and lockdown mode
+- **Mandatory Access Control**: AppArmor profiles enforced by default
+- **Firewall**: UFW (Uncomplicated Firewall) pre-configured with deny-by-default
+- **Audit Logging**: Comprehensive system auditing with auditd
+- **Automatic Security Updates**: Unattended security patches
+- **Intrusion Detection**: Fail2ban, AIDE, rkhunter, chkrootkit
+- **Antivirus**: ClamAV with automatic definition updates
+- **Application Sandboxing**: Firejail integration for application isolation
+
+### Privacy
+- **No Telemetry**: All telemetry and error reporting disabled
+- **Encrypted DNS**: DNS over TLS with privacy-focused providers (Quad9, Cloudflare)
+- **MAC Randomization**: Network privacy through MAC address randomization
+- **Tor Support**: Pre-installed Tor and Privoxy for anonymous browsing
+- **Metadata Removal**: MAT2 tool for cleaning file metadata
+- **Minimal Data Collection**: No user tracking or analytics
+
+### Hardening
+- Kernel lockdown mode enabled
+- Secure boot support
+- Disabled unnecessary services
+- Restricted kernel module loading
+- Protected kernel pointers and dmesg
+- Hardened network stack
+- Secure default permissions
+- Root login disabled
+- Strong password policies
+- SSH hardened configuration
+
+## Installation
+
+### Prerequisites
+- A computer with:
+  - 64-bit x86 processor
+  - 2GB RAM minimum (4GB recommended)
+  - 20GB disk space minimum
+  - UEFI or Legacy BIOS support
+
+### Building the ISO
+
+1. **Clone or copy SecureOS files**:
+   ```bash
+   cd /home/ubuntu/SecureOS
+   ```
+
+2. **Run the ISO builder** (requires root):
+   ```bash
+   sudo bash scripts/build_iso.sh
+   ```
+
+3. **Wait for build to complete**:
+   - This process takes 30-60 minutes depending on your system
+   - The ISO will be created in `iso-build/` directory
+
+4. **Verify checksums**:
+   ```bash
+   cd iso-build
+   sha256sum -c SecureOS-1.0.0-amd64.iso.sha256
+   ```
+
+### Creating Installation Media
+
+#### On Linux:
+```bash
+sudo dd if=SecureOS-1.0.0-amd64.iso of=/dev/sdX bs=4M status=progress
+sync
+```
+
+#### On macOS:
+```bash
+sudo dd if=SecureOS-1.0.0-amd64.iso of=/dev/rdiskX bs=4m
+```
+
+#### On Windows:
+Use [Rufus](https://rufus.ie/) or [Etcher](https://www.balena.io/etcher/)
+
+### Installing SecureOS
+
+1. **Boot from installation media**
+2. **Select language and keyboard layout**
+3. **Run the interactive installer**:
+   - Quick Install: Recommended secure defaults
+   - Custom Install: Full configuration options
+4. **Configure basic settings**:
+   - Hostname
+   - Username and password
+   - Disk selection
+5. **Review and confirm** installation
+6. **Wait for installation** to complete
+7. **Reboot** into your new SecureOS system
+
+## Post-Installation
+
+### Run Security Audit
+```bash
+sudo secureos-audit
+```
+
+### Update System
+```bash
+sudo apt update && sudo apt upgrade -y
+```
+
+### Configure Firewall Rules
+```bash
+# Allow specific services
+sudo ufw allow 22/tcp  # SSH
+sudo ufw allow 80/tcp  # HTTP
+sudo ufw allow 443/tcp # HTTPS
+```
+
+### Enable Additional Privacy Features
+
+#### Use Tor for Anonymous Browsing
+```bash
+systemctl start tor
+# Configure browser to use SOCKS proxy: localhost:9050
+```
+
+#### Randomize MAC Address
+```bash
+sudo macchanger -r eth0  # Replace eth0 with your interface
+```
+
+#### Scan for Rootkits
+```bash
+sudo rkhunter --check
+sudo chkrootkit
+```
+
+## Configuration Files
+
+- **Security Defaults**: `/etc/secureos/security-defaults.conf`
+- **Firewall Rules**: `/etc/ufw/`
+- **AppArmor Profiles**: `/etc/apparmor.d/`
+- **Audit Rules**: `/etc/audit/rules.d/`
+- **Kernel Parameters**: `/etc/sysctl.d/99-secureos-hardening.conf`
+
+## Security Tools Included
+
+| Tool | Purpose |
+|------|---------|
+| UFW | Firewall management |
+| AppArmor | Mandatory access control |
+| Auditd | System audit logging |
+| Fail2ban | Intrusion prevention |
+| ClamAV | Antivirus scanning |
+| AIDE | File integrity monitoring |
+| rkhunter | Rootkit detection |
+| chkrootkit | Rootkit scanner |
+| Firejail | Application sandboxing |
+| Tor | Anonymous networking |
+| MAT2 | Metadata removal |
+| Bleachbit | Privacy cleaning |
+
+## Testing the ISO (Virtual Machine)
+
+### Using QEMU:
+```bash
+qemu-system-x86_64 -m 2048 -enable-kvm \
+  -cdrom SecureOS-1.0.0-amd64.iso \
+  -boot d
+```
+
+### Using VirtualBox:
+1. Create new VM with Linux/Ubuntu (64-bit)
+2. Allocate 2GB RAM minimum
+3. Create 20GB virtual disk
+4. Attach ISO to optical drive
+5. Start VM
+
+### Using VMware:
+1. Create new VM
+2. Select "Install from disc image"
+3. Choose SecureOS ISO
+4. Configure 2GB RAM, 20GB disk
+5. Power on VM
+
+## Maintenance
+
+### Security Updates
+Automatic security updates are enabled by default. To check status:
+```bash
+sudo systemctl status unattended-upgrades
+```
+
+### Manual Updates
+```bash
+sudo apt update
+sudo apt upgrade
+```
+
+### Firewall Status
+```bash
+sudo ufw status verbose
+```
+
+### Check Security Status
+```bash
+sudo secureos-audit
+```
+
+### Update Virus Definitions
+```bash
+sudo freshclam
+```
+
+### Scan System for Viruses
+```bash
+sudo clamscan -r /home
+```
+
+## Customization
+
+### Disable Specific Security Features
+
+Edit `/etc/secureos/security-defaults.conf` and change settings:
+
+```ini
+[Privacy]
+randomize_mac=false  # Disable MAC randomization
+
+[Hardening]
+disable_bluetooth=false  # Enable Bluetooth
+```
+
+Then reboot or run:
+```bash
+sudo /usr/local/sbin/apply-secureos-settings
+```
+
+### Add Custom Firewall Rules
+
+```bash
+sudo ufw allow from 192.168.1.0/24 to any port 22
+sudo ufw reload
+```
+
+### Create Custom AppArmor Profile
+
+```bash
+sudo aa-genprof /path/to/application
+```
+
+## Troubleshooting
+
+### Boot Issues
+- Check UEFI/Legacy BIOS settings
+- Disable Secure Boot if necessary
+- Verify ISO checksum
+
+### Network Issues
+- Check if firewall is blocking: `sudo ufw status`
+- Verify DNS configuration: `systemd-resolve --status`
+- Test connectivity: `ping 1.1.1.1`
+
+### Application Not Starting
+- Check AppArmor: `sudo aa-status`
+- View denials: `sudo journalctl -xe | grep -i apparmor`
+- Set profile to complain mode: `sudo aa-complain /path/to/profile`
+
+## Architecture
+
+```
+SecureOS/
+├── installer/              # Interactive installer
+│   └── secure_installer.py # Python curses-based installer
+├── config/                 # Configuration files
+│   └── security-defaults.conf
+├── scripts/                # Build and maintenance scripts
+│   ├── build_iso.sh       # ISO builder
+│   └── post_install_hardening.sh
+└── iso-build/             # Output directory for ISO
+```
+
+## Contributing
+
+SecureOS is designed to be community-driven. Contributions are welcome!
+
+### Areas for Contribution
+- Additional security hardening
+- Privacy tools integration
+- Documentation improvements
+- Bug fixes and testing
+- Localization
+
+## Security Considerations
+
+### What SecureOS Does NOT Protect Against
+- Physical access attacks
+- Zero-day exploits
+- User error (weak passwords, social engineering)
+- State-level adversaries with unlimited resources
+- Hardware backdoors
+
+### Best Practices
+1. Use strong, unique passwords
+2. Keep system updated
+3. Review audit logs regularly
+4. Use encryption for sensitive data
+5. Be cautious with unknown software
+6. Regular backups
+
+## License
+
+SecureOS is based on Ubuntu/Debian and inherits their respective licenses. Custom components are provided as-is for educational and security purposes.
+
+## Support
+
+For issues, questions, or contributions:
+- Check documentation
+- Review logs: `/var/log/`
+- Run security audit: `sudo secureos-audit`
+
+## Changelog
+
+### Version 1.0.0 (Initial Release)
+- Base system on Ubuntu 22.04 LTS
+- Full disk encryption with LUKS2
+- Kernel hardening with security parameters
+- AppArmor enforcement
+- UFW firewall pre-configured
+- Audit logging with auditd
+- Privacy-focused DNS
+- Automatic security updates
+- Interactive installer with curses interface
+- Comprehensive security toolset
+
+## Roadmap
+
+### Version 1.1.0 (Planned)
+- [ ] Secure boot signing
+- [ ] Additional desktop environments
+- [ ] VPN integration
+- [ ] Enhanced MAC randomization
+- [ ] Biometric authentication support
+- [ ] Container security hardening
+
+### Version 2.0.0 (Future)
+- [ ] Custom kernel with additional patches
+- [ ] Advanced intrusion detection
+- [ ] Automated security response
+- [ ] Enhanced privacy features
+- [ ] GUI security management tools
+
+---
+
+**SecureOS** - Security and Privacy First
