@@ -6,7 +6,8 @@ set -e
 
 WORK_DIR="/tmp/secureos-build"
 ISO_NAME="SecureOS-1.0.0-amd64.iso"
-BASE_DISTRO="ubuntu-22.04"  # or debian-12
+# BASE_DISTRO variable for documentation - using Ubuntu 22.04 (Jammy)
+# To change base: modify debootstrap command to use different release
 
 echo "=========================================="
 echo "   SecureOS ISO Builder"
