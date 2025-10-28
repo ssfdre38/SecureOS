@@ -6,8 +6,8 @@ SecureOS is a hardened Linux distribution designed with security and privacy as 
 
 ---
 
-🌐 **Website**: https://ssfdre38.github.io/SecureOS  
-📦 **Packages**: https://ssfdre38.github.io/secureos-packages  
+🌐 **Website**: https://secureos.xyz  
+📦 **Packages**: https://packages.secureos.xyz  
 💻 **GitHub**: https://github.com/ssfdre38/SecureOS  
 📥 **Downloads**: https://github.com/ssfdre38/SecureOS/releases
 
@@ -426,7 +426,7 @@ SecureOS is free and open source software, licensed under the MIT License.
 
 - 📄 See [LICENSE](LICENSE) for full license text
 - 📋 See [COPYRIGHT.md](COPYRIGHT.md) for detailed attribution and third-party licenses
-- 🌐 Website: https://ssfdre38.github.io/SecureOS
+- 🌐 Website: https://secureos.xyz
 
 ### Trademarks
 
