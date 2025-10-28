@@ -322,6 +322,20 @@ For issues, questions, or contributions:
 
 ## Changelog
 
+### Version 2.0.0 (Latest)
+- **Custom Kernel Builder**: Build hardened kernels with security patches
+- **Advanced IDS**: Real-time intrusion detection with automated response
+- **GUI Security Manager**: PyQt5-based graphical management interface
+- **APT Repository**: Host custom SecureOS packages
+- Enhanced privacy and container security
+
+### Version 1.1.0
+- **VPN Integration**: WireGuard and OpenVPN with kill switch
+- **Enhanced MAC Randomization**: Per-connection privacy
+- **Container Security**: Docker/LXC hardening with seccomp
+- **SecureOS CLI**: Interactive command-line management
+- **Custom Packages**: Debian packages for easy installation
+
 ### Version 1.0.0 (Initial Release)
 - Base system on Ubuntu 24.04.3 LTS
 - Full disk encryption with LUKS2
@@ -336,20 +350,28 @@ For issues, questions, or contributions:
 
 ## Roadmap
 
-### Version 1.1.0 (Planned)
-- [ ] Secure boot signing
-- [ ] Additional desktop environments
-- [ ] VPN integration
-- [ ] Enhanced MAC randomization
-- [ ] Biometric authentication support
-- [ ] Container security hardening
+### Version 1.1.0 (✅ COMPLETE!)
+- [x] VPN integration (WireGuard & OpenVPN)
+- [x] Enhanced MAC randomization
+- [x] Container security hardening
+- [x] Additional desktop environments
+- [ ] Secure boot signing (in progress)
+- [ ] Biometric authentication support (planned)
 
-### Version 2.0.0 (Future)
-- [ ] Custom kernel with additional patches
-- [ ] Advanced intrusion detection
-- [ ] Automated security response
-- [ ] Enhanced privacy features
-- [ ] GUI security management tools
+### Version 2.0.0 (✅ COMPLETE!)
+- [x] Custom kernel builder with security patches
+- [x] Advanced intrusion detection system
+- [x] Automated security response
+- [x] Enhanced privacy features
+- [x] GUI security management tools
+- [x] APT repository infrastructure
+
+### Version 3.0.0 (Future)
+- [ ] Zero-trust network architecture
+- [ ] Hardware security module integration
+- [ ] Secure enclave support
+- [ ] Advanced threat intelligence
+- [ ] Cloud security integration
 
 ---
 
