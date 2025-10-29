@@ -5,7 +5,7 @@
 The SecureOS ISO is currently being built automatically on GitHub Actions infrastructure!
 
 ### Build Information
-- **Repository**: https://github.com/ssfdre38/SecureOS
+- **Repository**: https://github.com/barrersoftware/SecureOS
 - **Workflow**: Build SecureOS ISO
 - **Status**: Running (started a few minutes ago)
 - **Expected Duration**: 40-60 minutes
@@ -15,13 +15,13 @@ The SecureOS ISO is currently being built automatically on GitHub Actions infras
 
 **Option 1: Web Browser**
 ```
-https://github.com/ssfdre38/SecureOS/actions
+https://github.com/barrersoftware/SecureOS/actions
 ```
 
 **Option 2: Command Line**
 ```bash
 # Clone the repo
-git clone https://github.com/ssfdre38/SecureOS.git
+git clone https://github.com/barrersoftware/SecureOS.git
 cd SecureOS
 
 # Watch build progress
@@ -51,7 +51,7 @@ The GitHub Actions workflow is:
 #### Once Build Completes (in ~40-60 min):
 
 **Option 1: Download from Actions Artifacts**
-1. Go to https://github.com/ssfdre38/SecureOS/actions
+1. Go to https://github.com/barrersoftware/SecureOS/actions
 2. Click on the "Build SecureOS ISO" workflow run
 3. Scroll to "Artifacts" section
 4. Download "SecureOS-ISO" (contains ISO + checksums)
@@ -207,7 +207,7 @@ While GitHub builds, you can also:
 
 ## 📞 Support
 
-- **GitHub Issues**: https://github.com/ssfdre38/SecureOS/issues
+- **GitHub Issues**: https://github.com/barrersoftware/SecureOS/issues
 - **Documentation**: See README.md and BUILD.md
 - **Build Logs**: Available in Actions tab
 
@@ -217,4 +217,4 @@ While GitHub builds, you can also:
 **Current Build**: Running on GitHub Actions  
 **ETA**: 40-60 minutes from workflow start  
 
-Check https://github.com/ssfdre38/SecureOS/actions for live status!
+Check https://github.com/barrersoftware/SecureOS/actions for live status!

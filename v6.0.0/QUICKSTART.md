@@ -229,7 +229,7 @@ cat /var/log/secureos/soar/executions/latest.log
 
 - Read full documentation: `/home/ubuntu/SecureOS/v6.0.0/README.md`
 - Join community: https://secureos.xyz/community
-- Report issues: https://github.com/ssfdre38/SecureOS/issues
+- Report issues: https://github.com/barrersoftware/SecureOS/issues
 
 ---
 

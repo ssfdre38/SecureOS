@@ -544,8 +544,8 @@ osqueryi
 ## Support
 
 - Documentation: https://ssfdre38.github.io/SecureOS
-- GitHub: https://github.com/ssfdre38/SecureOS
-- Issues: https://github.com/ssfdre38/SecureOS/issues
+- GitHub: https://github.com/barrersoftware/SecureOS
+- Issues: https://github.com/barrersoftware/SecureOS/issues
 
 ---
 

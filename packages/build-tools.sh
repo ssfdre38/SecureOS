@@ -213,7 +213,7 @@ secureos-mac random wlan0
 
 ## Documentation
 
-Full documentation: https://github.com/ssfdre38/SecureOS
+Full documentation: https://github.com/barrersoftware/SecureOS
 EOF
 
 # Create postinst script

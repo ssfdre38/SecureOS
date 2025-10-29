@@ -35,7 +35,7 @@ while true; do
         echo "Run ID: $RUN_ID"
         echo ""
         echo "To view live logs in browser:"
-        echo "  https://github.com/ssfdre38/SecureOS/actions/runs/$RUN_ID"
+        echo "  https://github.com/barrersoftware/SecureOS/actions/runs/$RUN_ID"
         echo ""
         echo "To view logs in terminal:"
         echo "  gh run view $RUN_ID --log"
@@ -53,7 +53,7 @@ while true; do
                 echo "  gh run download $RUN_ID"
                 echo ""
                 echo "Or visit:"
-                echo "  https://github.com/ssfdre38/SecureOS/actions/runs/$RUN_ID"
+                echo "  https://github.com/barrersoftware/SecureOS/actions/runs/$RUN_ID"
             else
                 echo "❌ BUILD FAILED: $CONCLUSION"
                 echo ""

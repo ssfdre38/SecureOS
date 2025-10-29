@@ -168,7 +168,7 @@ This is a live ISO of SecureOS.
 Boot from this ISO to try SecureOS or install it to your system.
 
 Visit: https://secureos.xyz
-GitHub: https://github.com/ssfdre38/SecureOS
+GitHub: https://github.com/barrersoftware/SecureOS
 README
 
 echo -e "${YELLOW}Creating ISO image...${NC}"

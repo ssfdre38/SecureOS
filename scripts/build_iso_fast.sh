@@ -1,53 +1,34 @@
 #!/bin/bash
 #
-# SecureOS Fast ISO Builder (Using Best Mirror)
-# Uses kernel.org mirror for fastest downloads
+# SecureOS ISO Builder Script
+# Part of SecureOS - Security Enhanced Linux Distribution
 #
-
+# Copyright (c) 2025 Barrer Software
+# Licensed under the MIT License
+#
+# This script builds a custom Ubuntu-based ISO with security hardening
+#
 set -e
 
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-YELLOW='\033[1;33m'
-BLUE='\033[0;34m'
-NC='\033[0m'
+WORK_DIR="/tmp/secureos-build"
+ISO_NAME="SecureOS-1.0.0-amd64.iso"
+# BASE_DISTRO variable for documentation - using Ubuntu 24.04.3 LTS (Noble Numbat)
+# To change base: modify debootstrap command to use different release
 
-echo -e "${BLUE}════════════════════════════════════════════════════${NC}"
-echo -e "${BLUE}SecureOS Fast ISO Builder${NC}"
-echo -e "${BLUE}Using: mirrors.kernel.org (fastest mirror)${NC}"
-echo -e "${BLUE}════════════════════════════════════════════════════${NC}"
-echo ""
+echo "=========================================="
+echo "   SecureOS ISO Builder"
+echo "=========================================="
 
 # Check if running as root
-if [[ $EUID -ne 0 ]]; then
-   echo -e "${RED}This script must be run as root${NC}"
-   exit 1
-fi
-
-# Configuration
-WORK_DIR="/tmp/secureos-iso-build"
-ISO_NAME="SecureOS-v5.0.0-amd64.iso"
-ISO_OUTPUT="$PWD/iso-output"
-MIRROR="http://mirrors.kernel.org/ubuntu"
-
-echo -e "${YELLOW}Using fastest mirror: $MIRROR${NC}"
-echo ""
-
-echo -e "${YELLOW}Checking prerequisites...${NC}"
-
-# Check available space
-AVAILABLE=$(df /tmp | tail -1 | awk '{print $4}')
-REQUIRED=$((10 * 1024 * 1024)) # 10GB in KB
-
-if [ "$AVAILABLE" -lt "$REQUIRED" ]; then
-    echo -e "${RED}Insufficient space in /tmp${NC}"
-    echo "Required: 10GB, Available: $(( AVAILABLE / 1024 / 1024 ))GB"
+if [ "$EUID" -ne 0 ]; then 
+    echo "Please run as root"
     exit 1
 fi
 
-echo -e "${YELLOW}Installing build dependencies...${NC}"
-apt-get update -qq
-apt-get install -y -qq \
+# Install required packages
+echo "[*] Installing build dependencies..."
+apt-get update
+apt-get install -y \
     debootstrap \
     squashfs-tools \
     xorriso \
@@ -56,169 +37,246 @@ apt-get install -y -qq \
     grub-pc-bin \
     grub-efi-amd64-bin \
     mtools \
-    dosfstools 2>/dev/null || true
+    dosfstools \
+    git
 
-echo -e "${YELLOW}Creating build directory...${NC}"
+# Create work directory
+echo "[*] Creating work directory..."
 rm -rf "$WORK_DIR"
-mkdir -p "$WORK_DIR"/{chroot,iso/{casper,isolinux,install}}
-mkdir -p "$ISO_OUTPUT"
+mkdir -p "$WORK_DIR"/{chroot,image/{casper,isolinux,install}}
 
-echo -e "${YELLOW}Creating minimal filesystem...${NC}"
-echo -e "${GREEN}Using fast kernel.org mirror - should complete in 10-15 minutes${NC}"
-echo ""
-
-# Use the fast mirror
-debootstrap \
-    --variant=minbase \
-    --arch=amd64 \
-    --include=linux-image-generic,linux-headers-generic,systemd,udev \
-    noble \
-    "$WORK_DIR/chroot" \
-    "$MIRROR"
-
-echo -e "${YELLOW}Customizing system...${NC}"
+# Bootstrap base system
+echo "[*] Bootstrapping base system..."
+debootstrap --arch=amd64 noble "$WORK_DIR/chroot" http://nova.clouds.archive.ubuntu.com/ubuntu/
 
 # Mount necessary filesystems
+echo "[*] Mounting filesystems..."
+mount --bind /dev "$WORK_DIR/chroot/dev"
+mount --bind /run "$WORK_DIR/chroot/run"
 mount -t proc none "$WORK_DIR/chroot/proc"
 mount -t sysfs none "$WORK_DIR/chroot/sys"
-mount -o bind /dev "$WORK_DIR/chroot/dev"
 mount -t devpts none "$WORK_DIR/chroot/dev/pts"
 
-# Customize the chroot
-cat > "$WORK_DIR/chroot/customize.sh" << 'CHROOT_SCRIPT'
+# Configure APT
+echo "[*] Configuring package repositories..."
+cat > "$WORK_DIR/chroot/etc/apt/sources.list" << EOF
+deb http://nova.clouds.archive.ubuntu.com/ubuntu/ noble main restricted universe multiverse
+deb http://nova.clouds.archive.ubuntu.com/ubuntu/ noble-updates main restricted universe multiverse
+deb http://nova.clouds.archive.ubuntu.com/ubuntu/ noble-security main restricted universe multiverse
+deb http://nova.clouds.archive.ubuntu.com/ubuntu/ noble-backports main restricted universe multiverse
+EOF
+
+# Chroot and install packages
+echo "[*] Installing system packages..."
+cat > "$WORK_DIR/chroot/install_packages.sh" << 'CHROOT_EOF'
 #!/bin/bash
+set -e
+
 export DEBIAN_FRONTEND=noninteractive
 export HOME=/root
 export LC_ALL=C
 
-echo "secureos" > /etc/hostname
-
-# Basic packages
+# Update package lists
 apt-get update
+
+# Install kernel and base system
+apt-get install -y \
+    linux-generic \
+    casper \
+    lupin-casper \
+    discover \
+    laptop-detect \
+    os-prober \
+    network-manager \
+    resolvconf \
+    net-tools \
+    wireless-tools \
+    wpagui \
+    locales \
+    grub-common \
+    grub-gfxpayload-lists \
+    grub-pc \
+    grub-pc-bin \
+    grub2-common
+
+# Install security tools
 apt-get install -y \
     ufw \
-    fail2ban \
     apparmor \
-    openssh-server \
-    vim \
-    wget \
-    curl \
-    git \
-    python3 \
-    python3-pip
+    apparmor-utils \
+    auditd \
+    aide \
+    rkhunter \
+    chkrootkit \
+    fail2ban \
+    clamav \
+    clamav-daemon \
+    firejail \
+    bleachbit \
+    cryptsetup \
+    ecryptfs-utils
 
-# Enable services
-systemctl enable ufw
-systemctl enable fail2ban
+# Install privacy tools
+apt-get install -y \
+    tor \
+    privoxy \
+    macchanger \
+    mat2
+
+# Install minimal desktop (optional - can be removed for server)
+apt-get install -y \
+    xorg \
+    openbox \
+    lightdm \
+    firefox \
+    gnome-terminal
+
+# Install Python for installer
+apt-get install -y \
+    python3 \
+    python3-pip \
+    python3-curses
 
 # Clean up
+apt-get autoremove -y
 apt-get clean
-rm -rf /var/lib/apt/lists/*
-CHROOT_SCRIPT
 
-chmod +x "$WORK_DIR/chroot/customize.sh"
-chroot "$WORK_DIR/chroot" /customize.sh
-rm "$WORK_DIR/chroot/customize.sh"
+# Configure locales
+locale-gen en_US.UTF-8
 
-# Copy SecureOS files
-echo -e "${YELLOW}Copying SecureOS files...${NC}"
-mkdir -p "$WORK_DIR/chroot/opt/secureos"
-cp -r "$PWD"/{v5.0.0,v6.0.0,scripts,README.md,LICENSE} "$WORK_DIR/chroot/opt/secureos/" 2>/dev/null || true
+rm -f /install_packages.sh
+CHROOT_EOF
+
+chmod +x "$WORK_DIR/chroot/install_packages.sh"
+chroot "$WORK_DIR/chroot" /install_packages.sh
+
+# Copy installer
+echo "[*] Installing SecureOS installer..."
+cp -r ../installer "$WORK_DIR/chroot/opt/secureos-installer"
+chmod +x "$WORK_DIR/chroot/opt/secureos-installer/secure_installer.py"
+
+# Apply security hardening
+echo "[*] Applying security hardening..."
+cat > "$WORK_DIR/chroot/apply_hardening.sh" << 'HARDENING_EOF'
+#!/bin/bash
+
+# Kernel hardening (sysctl)
+cat >> /etc/sysctl.d/99-secureos.conf << EOF
+# Network security
+net.ipv4.conf.all.rp_filter = 1
+net.ipv4.conf.default.rp_filter = 1
+net.ipv4.icmp_echo_ignore_broadcasts = 1
+net.ipv4.conf.all.accept_source_route = 0
+net.ipv6.conf.all.accept_source_route = 0
+net.ipv4.conf.all.send_redirects = 0
+net.ipv4.conf.all.accept_redirects = 0
+net.ipv6.conf.all.accept_redirects = 0
+net.ipv4.conf.all.secure_redirects = 0
+net.ipv4.tcp_syncookies = 1
+
+# Kernel hardening
+kernel.dmesg_restrict = 1
+kernel.kptr_restrict = 2
+kernel.yama.ptrace_scope = 2
+kernel.unprivileged_bpf_disabled = 1
+net.core.bpf_jit_harden = 2
+EOF
+
+# AppArmor enforcement
+systemctl enable apparmor
+
+# Enable firewall
+ufw default deny incoming
+ufw default allow outgoing
+ufw logging on
+systemctl enable ufw
+
+# Enable audit logging
+systemctl enable auditd
+
+# Secure SSH (if installed)
+if [ -f /etc/ssh/sshd_config ]; then
+    sed -i 's/#PermitRootLogin.*/PermitRootLogin no/' /etc/ssh/sshd_config
+    sed -i 's/#PasswordAuthentication.*/PasswordAuthentication no/' /etc/ssh/sshd_config
+    echo "Protocol 2" >> /etc/ssh/sshd_config
+fi
+
+# Disable unnecessary services
+systemctl disable bluetooth 2>/dev/null || true
+systemctl disable cups 2>/dev/null || true
+
+rm -f /apply_hardening.sh
+HARDENING_EOF
+
+chmod +x "$WORK_DIR/chroot/apply_hardening.sh"
+chroot "$WORK_DIR/chroot" /apply_hardening.sh
+
+# Create live boot configuration
+echo "[*] Configuring live boot..."
+cat > "$WORK_DIR/chroot/etc/casper.conf" << EOF
+export USERNAME="live"
+export USERFULLNAME="Live session user"
+export HOST="secureos"
+EOF
 
 # Unmount filesystems
-echo -e "${YELLOW}Cleaning up mounts...${NC}"
-umount "$WORK_DIR/chroot/dev/pts" 2>/dev/null || true
-umount "$WORK_DIR/chroot/dev" 2>/dev/null || true
-umount "$WORK_DIR/chroot/sys" 2>/dev/null || true
-umount "$WORK_DIR/chroot/proc" 2>/dev/null || true
+echo "[*] Unmounting filesystems..."
+umount "$WORK_DIR/chroot/dev/pts"
+umount "$WORK_DIR/chroot/sys"
+umount "$WORK_DIR/chroot/proc"
+umount "$WORK_DIR/chroot/run"
+umount "$WORK_DIR/chroot/dev"
 
-echo -e "${YELLOW}Creating squashfs filesystem...${NC}"
-mksquashfs \
-    "$WORK_DIR/chroot" \
-    "$WORK_DIR/iso/casper/filesystem.squashfs" \
-    -comp xz \
-    -b 1M \
-    -Xbcj x86 \
-    -e boot
+# Create manifest
+echo "[*] Creating manifest..."
+chroot "$WORK_DIR/chroot" dpkg-query -W --showformat='${Package} ${Version}\n' > "$WORK_DIR/image/casper/filesystem.manifest"
+cp "$WORK_DIR/image/casper/filesystem.manifest" "$WORK_DIR/image/casper/filesystem.manifest-desktop"
+
+# Create squashfs
+echo "[*] Creating squashfs filesystem..."
+mksquashfs "$WORK_DIR/chroot" "$WORK_DIR/image/casper/filesystem.squashfs" -comp xz -b 1M
 
 # Copy kernel and initrd
-echo -e "${YELLOW}Copying kernel files...${NC}"
-cp "$WORK_DIR/chroot/boot"/vmlinuz-* "$WORK_DIR/iso/casper/vmlinuz"
-cp "$WORK_DIR/chroot/boot"/initrd.img-* "$WORK_DIR/iso/casper/initrd"
+echo "[*] Copying kernel and initrd..."
+cp "$WORK_DIR/chroot/boot"/vmlinuz-* "$WORK_DIR/image/casper/vmlinuz"
+cp "$WORK_DIR/chroot/boot"/initrd.img-* "$WORK_DIR/image/casper/initrd"
 
-# Create filesystem manifest
-echo -e "${YELLOW}Creating manifest...${NC}"
-chroot "$WORK_DIR/chroot" dpkg-query -W --showformat='${Package} ${Version}\n' > "$WORK_DIR/iso/casper/filesystem.manifest"
-printf $(du -sx --block-size=1 "$WORK_DIR/chroot" | cut -f1) > "$WORK_DIR/iso/casper/filesystem.size"
+# Create GRUB configuration
+echo "[*] Creating bootloader configuration..."
+cat > "$WORK_DIR/image/isolinux/grub.cfg" << EOF
+set timeout=10
+set default=0
 
-# Create isolinux config
-cat > "$WORK_DIR/iso/isolinux/isolinux.cfg" << 'ISOLINUX'
-DEFAULT live
-LABEL live
-  menu label ^Start SecureOS
-  kernel /casper/vmlinuz
-  append initrd=/casper/initrd boot=casper quiet splash ---
-ISOLINUX
+menuentry "Install SecureOS" {
+    linux /casper/vmlinuz boot=casper quiet splash ---
+    initrd /casper/initrd
+}
 
-# Copy isolinux files
-cp /usr/lib/ISOLINUX/isolinux.bin "$WORK_DIR/iso/isolinux/"
-cp /usr/lib/syslinux/modules/bios/ldlinux.c32 "$WORK_DIR/iso/isolinux/"
+menuentry "Try SecureOS (Live)" {
+    linux /casper/vmlinuz boot=casper quiet splash live-media-timeout=10 ---
+    initrd /casper/initrd
+}
+EOF
 
-# Create README
-cat > "$WORK_DIR/iso/README.txt" << 'README'
-SecureOS v5.0.0 "Quantum Shield"
-================================
-
-This is a live ISO of SecureOS.
-
-Boot from this ISO to try SecureOS or install it to your system.
-
-Visit: https://secureos.xyz
-GitHub: https://github.com/ssfdre38/SecureOS
-README
-
-echo -e "${YELLOW}Creating ISO image...${NC}"
-xorriso -as mkisofs \
-    -iso-level 3 \
-    -full-iso9660-filenames \
-    -volid "SecureOS 5.0.0" \
-    -eltorito-boot isolinux/isolinux.bin \
-    -eltorito-catalog isolinux/boot.cat \
-    -no-emul-boot \
-    -boot-load-size 4 \
-    -boot-info-table \
-    -isohybrid-mbr /usr/lib/ISOLINUX/isohdpfx.bin \
-    -output "$ISO_OUTPUT/$ISO_NAME" \
-    "$WORK_DIR/iso"
+# Create ISO
+echo "[*] Creating ISO image..."
+grub-mkrescue -o "/home/ubuntu/SecureOS/iso-build/$ISO_NAME" "$WORK_DIR/image" \
+    --output-dir="$WORK_DIR/iso-output"
 
 # Calculate checksums
-echo -e "${YELLOW}Calculating checksums...${NC}"
-cd "$ISO_OUTPUT"
-sha256sum "$ISO_NAME" > SHA256SUMS
-md5sum "$ISO_NAME" > MD5SUMS
-
-# Get ISO size
-ISO_SIZE=$(du -h "$ISO_NAME" | cut -f1)
+echo "[*] Generating checksums..."
+cd /home/ubuntu/SecureOS/iso-build
+sha256sum "$ISO_NAME" > "$ISO_NAME.sha256"
+md5sum "$ISO_NAME" > "$ISO_NAME.md5"
 
 # Cleanup
-echo -e "${YELLOW}Cleaning up build directory...${NC}"
+echo "[*] Cleaning up..."
 rm -rf "$WORK_DIR"
 
-echo ""
-echo -e "${GREEN}════════════════════════════════════════════════════${NC}"
-echo -e "${GREEN}ISO Build Complete!${NC}"
-echo -e "${GREEN}════════════════════════════════════════════════════${NC}"
-echo ""
-echo -e "ISO File: ${BLUE}$ISO_OUTPUT/$ISO_NAME${NC}"
-echo -e "Size: ${BLUE}$ISO_SIZE${NC}"
-echo ""
-echo "Checksums:"
-echo "  SHA256: $(cat SHA256SUMS)"
-echo "  MD5:    $(cat MD5SUMS)"
+echo "=========================================="
+echo "   Build completed successfully!"
+echo "=========================================="
+echo "ISO location: /home/ubuntu/SecureOS/iso-build/$ISO_NAME"
 echo ""
 echo "To test the ISO:"
-echo "  qemu-system-x86_64 -cdrom $ISO_OUTPUT/$ISO_NAME -m 2048"
-echo ""
-echo "To write to USB (replace /dev/sdX with your device):"
-echo "  sudo dd if=$ISO_OUTPUT/$ISO_NAME of=/dev/sdX bs=4M status=progress"
-echo ""
+echo "  qemu-system-x86_64 -m 2048 -cdrom /home/ubuntu/SecureOS/iso-build/$ISO_NAME"

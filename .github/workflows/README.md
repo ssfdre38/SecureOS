@@ -42,7 +42,7 @@ Runs on:
 
 To manually trigger the ISO build:
 
-1. Go to https://github.com/ssfdre38/SecureOS/actions
+1. Go to https://github.com/barrersoftware/SecureOS/actions
 2. Click "Build SecureOS ISO" workflow
 3. Click "Run workflow" button
 4. Select branch and click "Run workflow"

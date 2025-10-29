@@ -116,7 +116,7 @@ All contributions must:
 
 For licensing questions or permissions:
 - Email: legal@barrersoftware.com (if applicable)
-- GitHub: https://github.com/ssfdre38/SecureOS/issues
+- GitHub: https://github.com/barrersoftware/SecureOS/issues
 
 ## Disclaimer
 
@@ -140,6 +140,6 @@ SecureOS complies with:
 
 This copyright and attribution file may be updated. The current version is
 always available at:
-https://github.com/ssfdre38/SecureOS/blob/master/COPYRIGHT.md
+https://github.com/barrersoftware/SecureOS/blob/master/COPYRIGHT.md
 
 Last updated: October 28, 2025

@@ -8,8 +8,8 @@ SecureOS is a hardened Linux distribution designed with security and privacy as 
 
 🌐 **Website**: https://secureos.xyz  
 📦 **Packages**: https://packages.secureos.xyz  
-💻 **GitHub**: https://github.com/ssfdre38/SecureOS  
-📥 **Downloads**: https://github.com/ssfdre38/SecureOS/releases
+💻 **GitHub**: https://github.com/barrersoftware/SecureOS  
+📥 **Downloads**: https://github.com/barrersoftware/SecureOS/releases
 
 ---
 

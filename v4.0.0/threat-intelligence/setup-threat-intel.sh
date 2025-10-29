@@ -476,8 +476,8 @@ WHERE remote_port IN (4444, 5555, 6666, 7777, 8888, 9999);
 ## Support
 
 - Documentation: https://ssfdre38.github.io/SecureOS
-- GitHub: https://github.com/ssfdre38/SecureOS
-- Issues: https://github.com/ssfdre38/SecureOS/issues
+- GitHub: https://github.com/barrersoftware/SecureOS
+- Issues: https://github.com/barrersoftware/SecureOS/issues
 
 ---
 

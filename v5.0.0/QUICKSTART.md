@@ -333,7 +333,7 @@ sudo rm -rf /opt/secureos/v5.0.0/
 
 - **Documentation**: `/opt/secureos/v5.0.0/README.md`
 - **Website**: https://secureos.xyz
-- **GitHub**: https://github.com/ssfdre38/SecureOS
+- **GitHub**: https://github.com/barrersoftware/SecureOS
 - **Email**: support@secureos.xyz
 
 ---

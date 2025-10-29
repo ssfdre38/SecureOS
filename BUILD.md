@@ -30,7 +30,7 @@ Building the SecureOS ISO creates a bootable installation media with all securit
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/ssfdre38/SecureOS.git
+git clone https://github.com/barrersoftware/SecureOS.git
 cd SecureOS
 ```
 

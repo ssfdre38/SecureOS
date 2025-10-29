@@ -254,9 +254,9 @@ sudo certbot --nginx -d packages.secureos.xyz
 
 ## Links
 
-- Main Repository: https://github.com/ssfdre38/SecureOS
+- Main Repository: https://github.com/barrersoftware/SecureOS
 - Website Repository: https://github.com/ssfdre38/secureos.github.io
-- Package Repository: https://github.com/ssfdre38/secureos-packages
+- Package Repository: https://github.com/barrersoftware/secureos-packages
 - GitHub Pages Docs: https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site
 
 ## Support

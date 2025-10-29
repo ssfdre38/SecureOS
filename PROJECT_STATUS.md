@@ -238,7 +238,7 @@ SecureOS/
 ## 📞 Contact
 
 - **Website**: https://secureos.xyz
-- **GitHub**: https://github.com/ssfdre38/SecureOS
+- **GitHub**: https://github.com/barrersoftware/SecureOS
 - **Email**: team@secureos.xyz
 - **Security**: security@secureos.xyz
 - **Support**: support@secureos.xyz

@@ -222,7 +222,7 @@ See [CONTRIBUTING.md](../CONTRIBUTING.md) for guidelines.
 ## 📞 Contact
 
 - **Website:** https://secureos.xyz
-- **GitHub:** https://github.com/ssfdre38/SecureOS
+- **GitHub:** https://github.com/barrersoftware/SecureOS
 - **Email:** team@secureos.xyz
 
 ---

@@ -449,19 +449,19 @@ gcloud auth list
 
 ### From GitHub Releases
 ```bash
-curl -L https://github.com/ssfdre38/SecureOS/releases/latest/download/secureos-4.0.0-amd64.iso -o secureos.iso
+curl -L https://github.com/barrersoftware/SecureOS/releases/latest/download/secureos-4.0.0-amd64.iso -o secureos.iso
 ```
 
 ### From Source
 ```bash
-git clone https://github.com/ssfdre38/SecureOS.git
+git clone https://github.com/barrersoftware/SecureOS.git
 cd SecureOS
 sudo bash scripts/build_iso.sh
 ```
 
 ### APT Repository
 ```bash
-curl -L https://github.com/ssfdre38/secureos-packages/releases/latest/download/install-client.sh | sudo bash
+curl -L https://github.com/barrersoftware/secureos-packages/releases/latest/download/install-client.sh | sudo bash
 ```
 
 ---

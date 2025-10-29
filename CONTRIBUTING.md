@@ -44,7 +44,7 @@ We are committed to providing a welcoming and inspiring community for all. Pleas
 
 ```bash
 # Clone the repository
-git clone https://github.com/ssfdre38/SecureOS.git
+git clone https://github.com/barrersoftware/SecureOS.git
 cd SecureOS
 
 # Install development dependencies
@@ -398,7 +398,7 @@ Include:
 - **Quick Start**: [v5.0.0/QUICKSTART.md](v5.0.0/QUICKSTART.md)
 - **Architecture**: [v5.0.0/README.md](v5.0.0/README.md)
 - **Website**: https://secureos.xyz
-- **GitHub**: https://github.com/ssfdre38/SecureOS
+- **GitHub**: https://github.com/barrersoftware/SecureOS
 
 ---
 

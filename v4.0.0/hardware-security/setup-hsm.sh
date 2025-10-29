@@ -536,8 +536,8 @@ pkcs11-tool --module /usr/lib/x86_64-linux-gnu/libykcs11.so -T
 ## Support
 
 - Documentation: https://ssfdre38.github.io/SecureOS
-- GitHub: https://github.com/ssfdre38/SecureOS
-- Issues: https://github.com/ssfdre38/SecureOS/issues
+- GitHub: https://github.com/barrersoftware/SecureOS
+- Issues: https://github.com/barrersoftware/SecureOS/issues
 
 ---
 

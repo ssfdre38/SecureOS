@@ -384,19 +384,19 @@ All v3.0.0 features are available via:
 
 ```bash
 # From GitHub Releases
-curl -L https://github.com/ssfdre38/SecureOS/releases/download/v3.0.0/secureos-3.0.0-live-amd64.iso -o secureos.iso
+curl -L https://github.com/barrersoftware/SecureOS/releases/download/v3.0.0/secureos-3.0.0-live-amd64.iso -o secureos.iso
 
 # From APT Repository
-curl -L https://github.com/ssfdre38/secureos-packages/releases/download/latest/install-client.sh | sudo bash
+curl -L https://github.com/barrersoftware/secureos-packages/releases/download/latest/install-client.sh | sudo bash
 ```
 
 ## 🤝 Contributing
 
 We welcome contributions!
 
-- Report bugs: https://github.com/ssfdre38/SecureOS/issues
-- Submit PRs: https://github.com/ssfdre38/SecureOS/pulls
-- Discussions: https://github.com/ssfdre38/SecureOS/discussions
+- Report bugs: https://github.com/barrersoftware/SecureOS/issues
+- Submit PRs: https://github.com/barrersoftware/SecureOS/pulls
+- Discussions: https://github.com/barrersoftware/SecureOS/discussions
 
 ## 📄 License
 

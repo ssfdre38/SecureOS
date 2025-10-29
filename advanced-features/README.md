@@ -300,8 +300,8 @@ All SecureOS components inherit from base system licenses. Custom tools are prov
 
 ## Support
 
-- Issues: https://github.com/ssfdre38/SecureOS/issues
-- Discussions: https://github.com/ssfdre38/SecureOS/discussions
+- Issues: https://github.com/barrersoftware/SecureOS/issues
+- Discussions: https://github.com/barrersoftware/SecureOS/discussions
 - Security: Report privately to maintainers
 
 ---

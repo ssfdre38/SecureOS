@@ -16,8 +16,8 @@ SecureOS is a security and privacy-enhanced Linux distribution based on Ubuntu 2
 
 - **Main Website:** https://secureos.xyz
 - **Package Repository:** http://repo.secureos.xyz
-- **GitHub Repository:** https://github.com/ssfdre38/SecureOS
-- **Downloads:** https://github.com/ssfdre38/SecureOS/releases
+- **GitHub Repository:** https://github.com/barrersoftware/SecureOS
+- **Downloads:** https://github.com/barrersoftware/SecureOS/releases
 - **Documentation:** https://secureos.github.io
 
 ---
@@ -322,7 +322,7 @@ sudo reboot
 
 1. **Download ISO:**
    ```bash
-   wget https://github.com/ssfdre38/SecureOS/releases/latest/download/SecureOS-amd64.iso
+   wget https://github.com/barrersoftware/SecureOS/releases/latest/download/SecureOS-amd64.iso
    ```
 
 2. **Create Bootable USB:**
@@ -531,7 +531,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) in the repository
 ## 📞 Support
 
 - **Documentation:** https://secureos.github.io
-- **Issues:** https://github.com/ssfdre38/SecureOS/issues
+- **Issues:** https://github.com/barrersoftware/SecureOS/issues
 - **Email:** secureos@barrersoftware.com
 - **Website:** https://secureos.xyz
 

@@ -37,7 +37,7 @@ echo "  ✓ Fail2ban intrusion prevention"
 echo "  ✓ ClamAV antivirus"
 echo "  ✓ MAC address randomization"
 echo ""
-echo "GitHub: https://github.com/ssfdre38/SecureOS"
+echo "GitHub: https://github.com/barrersoftware/SecureOS"
 echo ""
 echo "Press Enter to run interactive installer demo..."
 read

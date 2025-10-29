@@ -9,9 +9,9 @@ All SecureOS repositories, website, and documentation have been successfully cre
 ## ✅ Completed Tasks
 
 ### Repositories Created
-- [x] **Main Repository**: https://github.com/ssfdre38/SecureOS
+- [x] **Main Repository**: https://github.com/barrersoftware/SecureOS
 - [x] **Website Repository**: https://github.com/ssfdre38/secureos.github.io  
-- [x] **Package Repository**: https://github.com/ssfdre38/secureos-packages
+- [x] **Package Repository**: https://github.com/barrersoftware/secureos-packages
 
 ### Website (secureos.xyz)
 - [x] Professional responsive website design
@@ -170,15 +170,15 @@ To host packages at `packages.secureos.xyz`:
 ## 🌐 URLs
 
 ### Current URLs
-- Main Repo: https://github.com/ssfdre38/SecureOS
+- Main Repo: https://github.com/barrersoftware/SecureOS
 - Website Repo: https://github.com/ssfdre38/secureos.github.io
-- Package Repo: https://github.com/ssfdre38/secureos-packages
+- Package Repo: https://github.com/barrersoftware/secureos-packages
 - Temp Website: https://ssfdre38.github.io/secureos.github.io/
 
 ### Final URLs (after DNS configuration)
 - Main Website: https://secureos.xyz
 - Package Repo: https://packages.secureos.xyz
-- Downloads: https://github.com/ssfdre38/SecureOS/releases
+- Downloads: https://github.com/barrersoftware/SecureOS/releases
 
 ---
 
@@ -230,8 +230,8 @@ All sensitive operations should be done through:
 
 - GitHub Pages Docs: https://docs.github.com/en/pages
 - DNS Help: Check your domain registrar's documentation
-- SecureOS Docs: https://github.com/ssfdre38/SecureOS
-- GitHub Actions: https://github.com/ssfdre38/SecureOS/actions
+- SecureOS Docs: https://github.com/barrersoftware/SecureOS
+- GitHub Actions: https://github.com/barrersoftware/SecureOS/actions
 
 ---
 
