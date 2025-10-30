@@ -143,7 +143,7 @@ cp "$WORK_DIR/chroot/boot"/initrd.img-* "$WORK_DIR/iso/casper/initrd"
 # Create filesystem manifest
 echo -e "${YELLOW}Creating manifest...${NC}"
 chroot "$WORK_DIR/chroot" dpkg-query -W --showformat='${Package} ${Version}\n' > "$WORK_DIR/iso/casper/filesystem.manifest"
-printf $(du -sx --block-size=1 "$WORK_DIR/chroot" | cut -f1) > "$WORK_DIR/iso/casper/filesystem.size"
+printf "%s" "$(du -sx --block-size=1 "$WORK_DIR/chroot" | cut -f1)" > "$WORK_DIR/iso/casper/filesystem.size"
 
 # Create isolinux config
 cat > "$WORK_DIR/iso/isolinux/isolinux.cfg" << 'ISOLINUX'
