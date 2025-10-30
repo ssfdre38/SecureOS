@@ -10,6 +10,9 @@
 #
 set -e
 
+# Get project directory dynamically
+PROJECT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+ISO_OUTPUT_DIR="${PROJECT_DIR}/iso-build"
 WORK_DIR="/tmp/secureos-build"
 ISO_NAME="SecureOS-1.0.0-amd64.iso"
 # BASE_DISTRO variable for documentation - using Ubuntu 24.04.3 LTS (Noble Numbat)
@@ -152,8 +155,12 @@ chroot "$WORK_DIR/chroot" /install_packages.sh
 
 # Copy installer
 echo "[*] Installing SecureOS installer..."
-cp -r ../installer "$WORK_DIR/chroot/opt/secureos-installer"
-chmod +x "$WORK_DIR/chroot/opt/secureos-installer/secure_installer.py"
+if [ -d "${PROJECT_DIR}/installer" ]; then
+    cp -r "${PROJECT_DIR}/installer" "$WORK_DIR/chroot/opt/secureos-installer"
+    chmod +x "$WORK_DIR/chroot/opt/secureos-installer/secure_installer.py" 2>/dev/null || true
+else
+    echo "[!] Warning: Installer directory not found, skipping"
+fi
 
 # Apply security hardening
 echo "[*] Applying security hardening..."
@@ -260,12 +267,13 @@ EOF
 
 # Create ISO
 echo "[*] Creating ISO image..."
-grub-mkrescue -o "/home/ubuntu/SecureOS/iso-build/$ISO_NAME" "$WORK_DIR/image" \
+mkdir -p "${ISO_OUTPUT_DIR}"
+grub-mkrescue -o "${ISO_OUTPUT_DIR}/${ISO_NAME}" "$WORK_DIR/image" \
     --output-dir="$WORK_DIR/iso-output"
 
 # Calculate checksums
 echo "[*] Generating checksums..."
-cd /home/ubuntu/SecureOS/iso-build
+cd "${ISO_OUTPUT_DIR}"
 sha256sum "$ISO_NAME" > "$ISO_NAME.sha256"
 md5sum "$ISO_NAME" > "$ISO_NAME.md5"
 
@@ -276,7 +284,8 @@ rm -rf "$WORK_DIR"
 echo "=========================================="
 echo "   Build completed successfully!"
 echo "=========================================="
-echo "ISO location: /home/ubuntu/SecureOS/iso-build/$ISO_NAME"
+echo "ISO location: ${ISO_OUTPUT_DIR}/${ISO_NAME}"
+echo "Project directory: ${PROJECT_DIR}"
 echo ""
 echo "To test the ISO:"
-echo "  qemu-system-x86_64 -m 2048 -cdrom /home/ubuntu/SecureOS/iso-build/$ISO_NAME"
+echo "  qemu-system-x86_64 -m 2048 -cdrom ${ISO_OUTPUT_DIR}/${ISO_NAME}"
