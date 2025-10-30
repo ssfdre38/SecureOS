@@ -1,5 +1,6 @@
 # Build artifacts
 iso-build/
+build-output/
 *.iso
 *.img
 build.log

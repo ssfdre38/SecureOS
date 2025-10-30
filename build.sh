@@ -9,7 +9,7 @@ echo ""
 # Change to the project directory
 cd "$(dirname "$0")"
 PROJECT_DIR="$(pwd)"
-BUILD_OUTPUT="/mnt/projects/builds/packages"
+BUILD_OUTPUT="${PROJECT_DIR}/build-output/packages"
 
 echo "Project Directory: $PROJECT_DIR"
 echo "Build Output: $BUILD_OUTPUT"
