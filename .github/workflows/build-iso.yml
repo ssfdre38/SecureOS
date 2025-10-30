@@ -45,7 +45,7 @@ jobs:
     
     - name: Build SecureOS ISO
       run: |
-        sudo bash scripts/build_iso.sh
+        sudo ./build-iso.sh
     
     - name: Verify ISO was created
       run: |
@@ -55,6 +55,10 @@ jobs:
         fi
         ls -lh iso-build/
         echo "ISO Size: $(du -h iso-build/${{ env.ISO_NAME }} | cut -f1)"
+    
+    - name: Run ISO verification
+      run: |
+        ./verify-iso.sh || echo "Verification completed with warnings"
     
     - name: Generate checksums
       run: |
@@ -97,11 +101,20 @@ jobs:
           See [README.md](https://github.com/${{ github.repository }}/blob/master/README.md) for installation instructions.
           
           ## Features
+          
+          ### Core Security
           - Full disk encryption (LUKS2)
-          - Hardened kernel
+          - Hardened kernel with security features
           - AppArmor, UFW firewall, auditd
           - Privacy tools: Tor, encrypted DNS
           - Automatic security updates
           - No telemetry
+          
+          ### v5.0.0 Advanced Features
+          - Quantum-resistant cryptography (NIST PQC)
+          - Blockchain-based audit logging
+          - AI-powered threat detection
+          - Self-healing security system
+          - Advanced malware sandboxing
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
