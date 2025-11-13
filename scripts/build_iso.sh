@@ -16,12 +16,8 @@ ISO_NAME="SecureOS-1.0.0-amd64.iso"
 # To change base: modify debootstrap command to use different release
 
 # Cleanup function to unmount on exit or error
-cleanup() {
-    echo "[*] Cleaning up mounts..."
-}
 
 # Set trap to cleanup on exit or error
-trap cleanup EXIT ERR
 
 echo "=========================================="
 echo "   SecureOS ISO Builder"
