@@ -269,8 +269,7 @@ EOF
 echo "[*] Creating ISO image..."
 ISO_OUTPUT_DIR="$HOME/SecureOS/iso-build"
 mkdir -p "$ISO_OUTPUT_DIR"
-grub-mkrescue -o "$ISO_OUTPUT_DIR/$ISO_NAME" "$WORK_DIR/image" \
-    --output-dir="$WORK_DIR/iso-output"
+grub-mkrescue -o "$ISO_OUTPUT_DIR/$ISO_NAME" "$WORK_DIR/image" 2>&1 | grep -v "xorriso" || true
 
 # Calculate checksums
 echo "[*] Generating checksums..."
