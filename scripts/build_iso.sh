@@ -62,7 +62,7 @@ mkdir -p "$WORK_DIR"/{chroot,image/{casper,isolinux,install}}
 
 # Bootstrap base system
 echo "[*] Bootstrapping base system..."
-debootstrap --arch=amd64 noble "$WORK_DIR/chroot" https://mirror.secureos.xyz/
+debootstrap --arch=amd64 noble "$WORK_DIR/chroot" http://archive.ubuntu.com/ubuntu/
 
 # Mount necessary filesystems
 echo "[*] Mounting filesystems..."
@@ -80,9 +80,9 @@ cp /etc/resolv.conf "$WORK_DIR/chroot/etc/resolv.conf"
 # Configure APT
 echo "[*] Configuring package repositories..."
 cat > "$WORK_DIR/chroot/etc/apt/sources.list" << EOF
-deb https://mirror.secureos.xyz/ noble main restricted universe multiverse
-deb https://mirror.secureos.xyz/ noble-updates main restricted universe multiverse
-deb https://mirror.secureos.xyz/ noble-security main restricted universe multiverse
+deb http://archive.ubuntu.com/ubuntu/ noble main restricted universe multiverse
+deb http://archive.ubuntu.com/ubuntu/ noble-updates main restricted universe multiverse
+deb http://security.ubuntu.com/ubuntu/ noble-security main restricted universe multiverse
 EOF
 
 # Chroot and install packages
