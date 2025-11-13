@@ -237,7 +237,11 @@ cp "$WORK_DIR/image/casper/filesystem.manifest" "$WORK_DIR/image/casper/filesyst
 
 # Create squashfs
 echo "[*] Creating squashfs filesystem..."
-mksquashfs "$WORK_DIR/chroot" "$WORK_DIR/image/casper/filesystem.squashfs" -comp xz -b 1M
+mksquashfs "$WORK_DIR/chroot" "$WORK_DIR/image/casper/filesystem.squashfs" \
+    -comp xz \
+    -b 1M \
+    -e proc sys dev run tmp \
+    -wildcards
 
 # Copy kernel and initrd
 echo "[*] Copying kernel and initrd..."
