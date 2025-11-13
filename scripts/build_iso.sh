@@ -57,6 +57,10 @@ mount -t proc none "$WORK_DIR/chroot/proc"
 mount -t sysfs none "$WORK_DIR/chroot/sys"
 mount -t devpts none "$WORK_DIR/chroot/dev/pts"
 
+# Copy DNS configuration for chroot
+echo "[*] Configuring DNS..."
+cp /etc/resolv.conf "$WORK_DIR/chroot/etc/resolv.conf"
+
 # Configure APT
 echo "[*] Configuring package repositories..."
 cat > "$WORK_DIR/chroot/etc/apt/sources.list" << EOF
