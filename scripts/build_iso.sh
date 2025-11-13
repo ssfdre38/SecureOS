@@ -72,6 +72,7 @@ mount -t devpts none "$WORK_DIR/chroot/dev/pts"
 
 # Copy DNS configuration for chroot
 echo "[*] Configuring DNS..."
+rm -f "$WORK_DIR/chroot/etc/resolv.conf"
 cp /etc/resolv.conf "$WORK_DIR/chroot/etc/resolv.conf"
 
 # Configure APT
