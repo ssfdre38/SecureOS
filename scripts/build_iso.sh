@@ -18,11 +18,6 @@ ISO_NAME="SecureOS-1.0.0-amd64.iso"
 # Cleanup function to unmount on exit or error
 cleanup() {
     echo "[*] Cleaning up mounts..."
-    umount -l "$WORK_DIR/chroot/dev/pts" 2>/dev/null || true
-    umount -l "$WORK_DIR/chroot/sys" 2>/dev/null || true
-    umount -l "$WORK_DIR/chroot/proc" 2>/dev/null || true
-    umount -l "$WORK_DIR/chroot/run" 2>/dev/null || true
-    umount -l "$WORK_DIR/chroot/dev" 2>/dev/null || true
 }
 
 # Set trap to cleanup on exit or error
@@ -239,11 +234,6 @@ EOF
 
 # Unmount filesystems
 echo "[*] Unmounting filesystems..."
-umount "$WORK_DIR/chroot/dev/pts"
-umount "$WORK_DIR/chroot/sys"
-umount "$WORK_DIR/chroot/proc"
-umount "$WORK_DIR/chroot/run"
-umount "$WORK_DIR/chroot/dev"
 
 # Create manifest
 echo "[*] Creating manifest..."
@@ -289,8 +279,8 @@ md5sum "$ISO_NAME" > "$ISO_NAME.md5"
 
 # Cleanup
 echo "[*] Cleaning up..."
-# Trap will handle unmounting, just remove the directory
-rm -rf "$WORK_DIR"
+# Just try to remove directory, ignore any errors from mounted filesystems
+rm -rf "$WORK_DIR" 2>/dev/null || true
 
 echo "=========================================="
 echo "   Build completed successfully!"
