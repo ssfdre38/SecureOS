@@ -275,6 +275,12 @@ md5sum "$ISO_NAME" > "$ISO_NAME.md5"
 
 # Cleanup
 echo "[*] Cleaning up..."
+# Unmount filesystems before removing
+umount -l "$WORK_DIR/chroot/dev/pts" 2>/dev/null || true
+umount -l "$WORK_DIR/chroot/sys" 2>/dev/null || true
+umount -l "$WORK_DIR/chroot/proc" 2>/dev/null || true
+umount -l "$WORK_DIR/chroot/run" 2>/dev/null || true
+umount -l "$WORK_DIR/chroot/dev" 2>/dev/null || true
 rm -rf "$WORK_DIR"
 
 echo "=========================================="
