@@ -8,7 +8,9 @@
 #
 # This script builds a custom Ubuntu-based ISO with security hardening
 #
-set +e # Continue on errors
+set -e  # Exit on any error
+set -u  # Exit on undefined variables
+set -o pipefail  # Exit on pipe failures
 
 WORK_DIR="/tmp/secureos-build"
 ISO_NAME="SecureOS-1.0.0-amd64.iso"
@@ -16,8 +18,17 @@ ISO_NAME="SecureOS-1.0.0-amd64.iso"
 # To change base: modify debootstrap command to use different release
 
 # Cleanup function to unmount on exit or error
+cleanup() {
+    echo "[*] Cleaning up mounts..."
+    umount -lf "$WORK_DIR/chroot/dev/pts" 2>/dev/null || true
+    umount -lf "$WORK_DIR/chroot/dev" 2>/dev/null || true
+    umount -lf "$WORK_DIR/chroot/proc" 2>/dev/null || true
+    umount -lf "$WORK_DIR/chroot/sys" 2>/dev/null || true
+    umount -lf "$WORK_DIR/chroot/run" 2>/dev/null || true
+}
 
 # Set trap to cleanup on exit or error
+trap cleanup EXIT ERR
 
 echo "=========================================="
 echo "   SecureOS ISO Builder"
@@ -78,16 +89,21 @@ EOF
 echo "[*] Installing system packages..."
 cat > "$WORK_DIR/chroot/install_packages.sh" << 'CHROOT_EOF'
 #!/bin/bash
-set +e # Continue on errors
+set -e  # Exit on error
+set -u  # Exit on undefined variables
 
 export DEBIAN_FRONTEND=noninteractive
 export HOME=/root
 export LC_ALL=C
 
+echo "[CHROOT] Starting package installation..."
+
 # Update package lists
-apt-get update
+echo "[CHROOT] Updating package lists..."
+apt-get update || { echo "[CHROOT] ERROR: apt-get update failed"; exit 1; }
 
 # Install kernel and base system
+echo "[CHROOT] Installing kernel and base system..."
 apt-get install -y \
     linux-generic \
     casper \
@@ -152,11 +168,34 @@ apt-get clean
 # Configure locales
 locale-gen en_US.UTF-8
 
+echo "[CHROOT] Package installation complete!"
 rm -f /install_packages.sh
 CHROOT_EOF
 
 chmod +x "$WORK_DIR/chroot/install_packages.sh"
-chroot "$WORK_DIR/chroot" /install_packages.sh
+
+echo "[*] Executing chroot installation..."
+if ! chroot "$WORK_DIR/chroot" /install_packages.sh; then
+    echo "ERROR: Chroot package installation failed!"
+    exit 1
+fi
+
+echo "[*] Verifying kernel installation..."
+if ! ls "$WORK_DIR/chroot/boot/vmlinuz-"* >/dev/null 2>&1; then
+    echo "ERROR: Kernel not found! Installation incomplete."
+    echo "Contents of $WORK_DIR/chroot/boot:"
+    ls -la "$WORK_DIR/chroot/boot/" || true
+    exit 1
+fi
+
+if ! ls "$WORK_DIR/chroot/boot/initrd.img-"* >/dev/null 2>&1; then
+    echo "ERROR: Initrd not found! Installation incomplete."
+    exit 1
+fi
+
+echo "[*] Kernel verification passed!"
+ls -lh "$WORK_DIR/chroot/boot/vmlinuz-"*
+ls -lh "$WORK_DIR/chroot/boot/initrd.img-"*
 
 # Copy installer
 echo "[*] Installing SecureOS installer..."
