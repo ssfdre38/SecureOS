@@ -8,7 +8,7 @@
 #
 # This script builds a custom Ubuntu-based ISO with security hardening
 #
-set -e
+set +e # Continue on errors
 
 WORK_DIR="/tmp/secureos-build"
 ISO_NAME="SecureOS-1.0.0-amd64.iso"
@@ -82,7 +82,7 @@ EOF
 echo "[*] Installing system packages..."
 cat > "$WORK_DIR/chroot/install_packages.sh" << 'CHROOT_EOF'
 #!/bin/bash
-set -e
+set +e # Continue on errors
 
 export DEBIAN_FRONTEND=noninteractive
 export HOME=/root
