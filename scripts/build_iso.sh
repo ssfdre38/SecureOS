@@ -267,7 +267,8 @@ EOF
 
 # Create ISO
 echo "[*] Creating ISO image..."
-ISO_OUTPUT_DIR="$HOME/SecureOS/iso-build"
+# Use WORKSPACE if in Jenkins, otherwise default to current directory
+ISO_OUTPUT_DIR="${WORKSPACE:-$(pwd)}/iso-output"
 mkdir -p "$ISO_OUTPUT_DIR"
 grub-mkrescue -o "$ISO_OUTPUT_DIR/$ISO_NAME" "$WORK_DIR/image" 2>&1 | grep -v "xorriso" || true
 
