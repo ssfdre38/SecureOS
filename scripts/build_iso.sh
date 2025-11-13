@@ -15,6 +15,19 @@ ISO_NAME="SecureOS-1.0.0-amd64.iso"
 # BASE_DISTRO variable for documentation - using Ubuntu 24.04.3 LTS (Noble Numbat)
 # To change base: modify debootstrap command to use different release
 
+# Cleanup function to unmount on exit or error
+cleanup() {
+    echo "[*] Cleaning up mounts..."
+    umount -l "$WORK_DIR/chroot/dev/pts" 2>/dev/null || true
+    umount -l "$WORK_DIR/chroot/sys" 2>/dev/null || true
+    umount -l "$WORK_DIR/chroot/proc" 2>/dev/null || true
+    umount -l "$WORK_DIR/chroot/run" 2>/dev/null || true
+    umount -l "$WORK_DIR/chroot/dev" 2>/dev/null || true
+}
+
+# Set trap to cleanup on exit or error
+trap cleanup EXIT ERR
+
 echo "=========================================="
 echo "   SecureOS ISO Builder"
 echo "=========================================="
