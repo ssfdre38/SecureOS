@@ -76,7 +76,6 @@ cat > "$WORK_DIR/chroot/etc/apt/sources.list" << EOF
 deb https://mirror.secureos.xyz/ noble main restricted universe multiverse
 deb https://mirror.secureos.xyz/ noble-updates main restricted universe multiverse
 deb https://mirror.secureos.xyz/ noble-security main restricted universe multiverse
-deb https://mirror.secureos.xyz/ noble-backports main restricted universe multiverse
 EOF
 
 # Chroot and install packages
