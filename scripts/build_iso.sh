@@ -267,14 +267,19 @@ EOF
 
 # Create ISO
 echo "[*] Creating ISO image..."
-grub-mkrescue -o "/home/ubuntu/SecureOS/iso-build/$ISO_NAME" "$WORK_DIR/image" \
+ISO_OUTPUT_DIR="$HOME/SecureOS/iso-build"
+mkdir -p "$ISO_OUTPUT_DIR"
+grub-mkrescue -o "$ISO_OUTPUT_DIR/$ISO_NAME" "$WORK_DIR/image" \
     --output-dir="$WORK_DIR/iso-output"
 
 # Calculate checksums
 echo "[*] Generating checksums..."
-cd /home/ubuntu/SecureOS/iso-build
+cd "$ISO_OUTPUT_DIR"
 sha256sum "$ISO_NAME" > "$ISO_NAME.sha256"
 md5sum "$ISO_NAME" > "$ISO_NAME.md5"
+
+# Set ownership
+chown ${SUDO_USER:-$USER}:${SUDO_USER:-$USER} "$ISO_NAME"* 2>/dev/null || true
 
 # Cleanup
 echo "[*] Cleaning up..."
@@ -284,7 +289,7 @@ rm -rf "$WORK_DIR" 2>/dev/null || true
 echo "=========================================="
 echo "   Build completed successfully!"
 echo "=========================================="
-echo "ISO location: /home/ubuntu/SecureOS/iso-build/$ISO_NAME"
+echo "ISO location: $ISO_OUTPUT_DIR/$ISO_NAME"
 echo ""
 echo "To test the ISO:"
-echo "  qemu-system-x86_64 -m 2048 -cdrom /home/ubuntu/SecureOS/iso-build/$ISO_NAME"
+echo "  qemu-system-x86_64 -m 2048 -cdrom $ISO_OUTPUT_DIR/$ISO_NAME"
